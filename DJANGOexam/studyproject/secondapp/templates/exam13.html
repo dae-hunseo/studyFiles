@@ -1,0 +1,103 @@
+{% extends 'basesimple.html' %}
+
+{% block mycss %}
+    .aa{
+        color:red;
+    }
+    .bb{
+        color:blue;
+    }
+{% endblock %}
+
+
+{% block mycontent %} <!--https://docs.djangoproject.com/en/4.1/ref/templates/builtins/ 참고-->
+    <h3>1. 반복문</h3>
+    
+    {% for food in foods %}
+        <p>{{ food }}</p>
+    {% endfor %}
+
+    {% for food in foods %}
+        <p>{{ forloop.counter }} {{ food }}</p> <!--foorloop.counter 주목. 몇번째 반복인지 보여줌. 1부터 시작.-->
+    {% endfor %}
+
+    {% for element in empty_list %} <!--list가 비어있어서 한번도 수행되지 않을때는 empty태그가 대신 처리된다.-->
+        <p>{{ element }}</p>
+    {% empty %}
+        <p>지금 아무것도 없네요..</p>
+    {% endfor %}
+    <hr>
+
+    <h3>2. 조건문</h3>
+    {% if '짜장면' in foods %}
+        <p>짜장면 역시 또자강!!</p>
+    {% endif %}
+    <hr>
+
+    {% for food in foods %}
+        {% if forloop.last %} <!--for문의 마지막이면 수행된다.-->
+            <p>짜장면엔 고추가루지!!</p>
+        {% else %}            <!--for문의 마지막이 아니면 수행된다.-->
+            <p>{{ food }}</p>
+        {% endif %}
+    {% endfor %}
+    <hr>
+
+    <h3>3. length filter</h3>
+    {% for food in foods %}
+        {% if food|length > 2 %} <!--food의 글자길이가 2이상 되면(한글도 1글자가 1임)-->
+            <p>메뉴 이름이 너무 길어요</p>
+        {% else %}
+            <p>{{ food }}, {{ food|length }}</p>
+        {% endif %}
+    {% endfor %}
+    <p>{{ foods }}</p>
+    <p>{{ foods|length }}</p> <!--foods가 리스트니까 엘리먼트 개수를 리턴한다.-->
+    <p>{{ foods.0 }}</p>      <!--리스트의 첫번째 원소를 리턴한다.-->
+    <p>{{ foods.0|length }}</p>
+    <p>{{ foods.1 }}</p>
+    <p>{{ foods.1|length }}</p>
+    <hr>
+
+    <h3>4. lorem ipsum</h3>
+    <p>{% lorem %}</p> <!--장고가 내장하고 있는 연습용 문장이라 보면 됨.-->
+    <hr>
+    {% lorem 3 w %} <!--lorem이라는 장고가 내장하고있는 채우기 워드에서 앞에서 3개 워드(단어)만 채워라.-->
+    <hr>
+    {% lorem 4 w random %} <!--랜덤으로 4개 워드(단어)만 채워라.-->
+    <hr>
+
+    <h3>5. 글자수 제한</h3>
+    <p>{{ messages|truncatewords:3 }}</p> <!--필터링--> <!--messages는 view.py의 exam13()에 가보면 있음-->
+    <p>{{ messages|truncatechars:3 }}</p>
+    <p>{{ messages|truncatechars:10 }}</p>
+    <hr>
+
+    <h3>6. 글자 관련 필터</h3>
+    <p>{{ 'ABC'|lower }}</p>        <!--필터링--><!--'ABC'를 소문자로-->
+    <p>{{ messages|title }}</p> <!--message변수 내용을 대문자로-->
+    <p>{{ 'abc edf'|capfirst }}</p> <!--첫글자만 대문자로-->
+    <p>{{ foods|random }}</p>   <!--foods 변수에서 랜덤으로 뽑아라-->
+
+    <h3>7. 연산</h3>
+    <p>{{ 4|add:6 }}</p>            <!--필터링--> <!--4에다가 6을 더하라-->
+    <p>{{ 4|divisibleby:2 }}</p>    <!--2를 나눈 나머지가 어떻게 되는지 체크. 2로 나눠지면 True, 안되면 False-->
+
+    <h3>8. 날짜 표현</h3>
+    <p>전달받은 데이터 : {{ datetime_now }}</p> <!--datetime_now는 views.py의 exam13에서 호출된 것임.-->
+    <p>{% now "DATETIME_FORMAT" %}</p>
+    <p>{% now "DATE_FORMAT" %}</p>
+    <p>{% now "SHORT_DATETIME_FORMAT" %}</p>
+    <p>{% now "SHORT_DATE_FORMAT" %}</p>
+    <p>{% now "Y y m n M d j w D l z" %}</p>    <!--z는 오늘이 1년 365일중에 며칠째인지-->
+    <p>{% now "e T g  G h H i s a A" %}</p> <!--https://docs.djangoproject.com/en/4.1/ref/templates/builtins/ 에서 참고-->
+    <hr>
+    <ul>
+   {% for data in foods %}
+        <li class="{% cycle 'aa' 'bb' %}">{{ data }}</li> <!--강사가 css를 적용해서 어떤 컨텐츠를 내보낼때 번갈아가면서 어떤 스타일을 내보내겠다할때 유용할거 같다고 함.-->
+   {% endfor %} <!--cycle은 루프문에서 많이 사용한다. resetcycle 태그를 사용하여 첫번째 인수에서 다시 시작할 수 있따.-->
+    </ul>
+{% endblock %}
+
+
+

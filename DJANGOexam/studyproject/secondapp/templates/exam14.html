@@ -1,0 +1,36 @@
+{% extends 'base.html' %} <!--base.html은 부트 스트랩을 활용함-->
+<!--localhost:8000/secondapp/exam14/올라프1/정수값/실수값-->
+{% block content %}
+<div class="container p-3 my-3 bg-dark text-white"><h1>올라프를 소개해용(1)</h1></div> <!--부트 스트랩이 활용됨.--> <!--클라이언트의 화면 크기에 따라 컨텐츠의 구성이나 크기가 바뀌는 것. 반응형 웹.-->
+<!--bootstrap templates 검색하면 무료 템플릿들 많이 제공됨.--> <!--위 코드는 클래스가 여러개 적용된 것임.--> <!--p-3와 my-3는 https://minaminaworld.tistory.com/136 참고--> <!--여기서 class들은 부트스트랩들이 내장하고 있는 클래스-->
+{% if result %} <!--result가 True면 이걸 출력하고-->
+ <div class="card" style="width:200px"> <!--이렇게 인라인 방식으로 설정하면 부트스트랩의 css파일이 적용하는것보다 우선순위가 높아짐. 즉 부트스트랩이 적용한 방식에서 부분적으로 바꾸고 싶다면 이렇게 인라인으로 적용하면 됨.-->
+     <a href="secondaap/exam19/"><img class="card-img-top" src="/static/images/olaf1.png" alt="Card image" style="width:100%"></a> <!--alt는 이미지가 출력되지 않을때 대체할(대신 보여줄) 텍스트--> <!--exam14_1.html에서는 src를 템플릿태그를 사용함.-->
+    <div class="card-body"> <!--위의 이미지를 클릭하면 exam19로 넘어감-->
+      <h4 class="card-title">울라프1</h4>
+      <p class="card-text">울라프는 겨울 왕국에서 가장 인기있는 캐릭터입니다요.</p>
+      <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+ </div>
+{% else %}  <!--result가 False면 이걸 출력함-->
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h4 class="card-title">올라프2</h4>
+      <p class="card-text">울라프는 겨울 왕국에서 가장 인기있는 캐릭터입니다요.</p>
+      <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+    <img class="card-img-bottom" src="http://localhost:8000/static/images/olaf1.png" alt="Card image" style="width:100%">
+  </div>
+{% endif %}
+<hr>
+<button type="button" class="btn btn-outline-primary"  onclick='alert("{{ num1|add:100 }}")'>100 더하기</button> <!--버튼을 클릭하면 alert()함수를 이용해 num1에 100을 더해서 알림창을 띄워줌.-->
+<button type="button" class="btn btn-outline-success" onclick='displayNum()'>실수 데이터 출력(소수점 아래 둘째짜리까지)</button>
+<output></output>
+<script>
+function displayNum() { //실수 데이터를 소수점둘째자리까지 화면에 출력하는 함수
+  document.querySelector("output").innerHTML = "<h3>" + {{num2|floatformat:2}} + "</h3>";   //{{num2|floatformat:2}}는 num2를 소수점이하 2째자리까지 내보내라는 뜻.
+  //$('output').html("<h3>" + {{num2|floatformat:2}} + "</h3>");
+  // document.getElementsByTagName("output")[0].innerHTML = "<h3>" + {{num2|floatformat:2}} + "</h3>";
+}
+</script>
+{% endblock %}

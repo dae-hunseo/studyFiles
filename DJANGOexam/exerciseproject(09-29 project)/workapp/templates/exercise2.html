@@ -1,0 +1,27 @@
+{% extends 'basesimple.html' %}
+
+{% block mycss %} /*head 부분*/
+  img {
+    width : 200px;
+    height : 200px;
+  }
+{% endblock %} /*head 부분*/
+{% block mycontent %} <!--body 부분-->
+    <h1>인터페이스 개발 팀 프로젝트</h1>
+    <hr>
+    {% if memberlist %} <!--exam6.html 참고--> <!--if문 시작-->
+        <h2>{{result}}</h2>
+        <ul>
+          <li>{{membername.0}}</li> <!--{% for num in result %}-->
+          <li>{{membername.1}}</li> <!--[{num}]-->
+          <li>{{membername.2}}</li> <!--{% endfor %}-->
+        </ul>
+        <img src="/static/images/olaf3.png">
+        <!--위 코드를 대체하는 다른 CASE-->
+        <!-- {% load static %} -->
+        <!-- <img src = "{% static 'images/olaf3.png' %}">-->
+    {% else %}
+        <h2>{{result}}</h2>
+        <img src="/static/images/olaf4.png">
+    {% endif %} <!--if구문 종료-->
+{% endblock %} <!--body 부분-->

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="text-align:center">
+  <h1 >이름이 'unico'인 다른 장고뷰를 요청해보자!! </h1>
+  <hr>
+  <form action="{% url 'unico' %}" method="GET">  <!--action에 의해 name이 unico인 url로 요청된다. name이 unico인 것은 secondapp\urls.py에 보면 exam16인 것을 볼 수 있다. 즉 submit타입인 버튼을 누르면 action의 속성값으로 넘어간다.-->
+    <input type="text" name="message">
+    <input type="submit"> <!--이 버튼을 누르면 action의 속성값으로 페이지가 넘어간다.-->
+  </form>
+  </div>
+{% endblock %}

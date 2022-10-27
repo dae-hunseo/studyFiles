@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 실습1</title>
+  <style>
+    h1#weather{
+        width: 400px;
+        height: 100px;
+        line-height : 100px; /*height와 값을 같게 주면 상하길이의 정중앙에 컨텐츠가 위치하게 된다.*/
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        background : linear-gradient(to right, red, orange, yellow, green, blue, navy, purple);
+        color: white;
+        border-radius: 15px;
+    }
+    #text_blue{
+        color: blue;
+    }
+    img{
+        border: 1px solid pink;
+        border-radius:15px;
+        margin: 5px; /*옆에 그림과 마진이 따로따로가 아니라 옆 그림과의 간격이 5px. 10px이 아니다.*/
+        box-shadow: 8px 8px 10px pink;
+
+    }
+    div{
+        text-align: center;
+        /*div 태그에 사이즈가 지정되어있지 않기 때문에 좌우너비는 100%이고 상하높이는 컨텐츠높이와 같아진다. 그래서 margin값을 지정해도 변화가 없다. f12 눌러서 div에 마우스 커서를 올려놓으면 알 수 있음.*/
+    }
+    img:hover{
+        opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+    <h1 id = "weather"><span id="text_blue">날씨</span>의 종류</h1>
+    <hr>
+    <div>
+        <img src = "../images/sun.png" width = 150px height = 150px> <!--같은 상위 폴더(WEBCLIENT)를 갖고 있는 images폴더에 있는 sun.png 파일-->
+        <img src = "../images/rain.png" width = 150px height = 150px>
+        <img src = "../images/cloud.png" width = 150px height = 150px>
+    </div>
+    <div>
+        <img src = "../images/cloud_sun.png" width = 150px height = 150px>
+        <img src = "../images/snow.png" width = 150px height = 150px>
+        <img src = "../images/etc.png" width = 150px height = 150px>
+    </div>
+</body>
+</html>

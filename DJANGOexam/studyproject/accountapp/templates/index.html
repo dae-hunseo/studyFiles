@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark"> <!--index.html은 클라이언트에게 제일 먼저 제공하는 html을 이렇게 이름 붙인다.-->
+    <ul>
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Dropdown link
+      </a>
+      <div class="dropdown-menu">
+        {% if not logineduser %}
+            <a class="dropdown-item" href="{% url 'account:register' %}">회원가입</a> <!--url.py에서 app_name = "account"로 되어있다.-->
+            <a class="dropdown-item" href="{% url 'account:login' %}">로그인</a>
+        {% else %}
+            <a class="dropdown-item" href="{% url 'account:logout' %}">로그아웃</a>
+        {% endif %}
+        <a class="dropdown-item" href="{% url 'account:onlymember' %}">회원페이지</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+{% endblock %}

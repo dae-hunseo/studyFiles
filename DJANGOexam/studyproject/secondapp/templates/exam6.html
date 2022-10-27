@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>결과</h1>
+<p>
+    {% if num %}
+         <h2>결과 값 : {{ num }}</h2>
+    {% else %}
+        <form method="POST" action="/secondapp/exam6/"> <!--action에서 서버주소와 포트번호를 생략했다.--> <!--POST는 URL에 사용자가 입력한 정보가 안 뜸-->
+            {% csrf_token %} <!--csrf 검색--> <!--POST방식인데 이게 없으면 에러발생-->
+            <input type="number" name="number" placeholder="숫자를 입력하세요" required> <!--input 태그의 type으로 number을 줘서 숫자만 입력할 수 있다.-->
+            <input type="submit" value="POST방식으로요청~~~">
+        </form>
+    {% endif %}
+</p>
+
+</body>
+</html>

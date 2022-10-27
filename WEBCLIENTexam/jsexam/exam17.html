@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form name="fm">
+	<select id="choice" onchange="go();"> <!--select태그는 드롭박스를 제공하는데, 옵션을 하나 고르면 onchange() 함수가 발동된다.-->
+		<option value="">---관심있는 기술을 선택해 주세요---</option>
+		<option value="http://www.w3schools.com/js/default.asp">Learn JavaScript</option>
+		<option value="http://www.w3schools.com/js/js_htmldom.asp">Learn HTML DOM</option>
+		<option value="http://www.w3schools.com/jquery/default.asp">Learn jQuery</option>
+		<option value="http://www.w3schools.com/xml/ajax_intro.asp">Learn AJAX</option>
+		<option value="http://www.w3schools.com/js/js_json_intro.asp">Learn JSON</option>
+	</select>
+</form>
+<script>
+function go(){	
+	location.href = document.getElementById("choice").value; //value 값으로 링크가 열림
+	//location.href = document.querySelector("#choice").value;
+	//location.href = "http://www.naver.com/"; //드롭박스(select태그)에서 어떤 옵션을 선택해도 네이버로 옮겨간다.
+}
+</script>
+</body>
+</html>
+
+
+
+
+

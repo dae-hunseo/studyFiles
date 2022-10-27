@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    @font-face {
+         font-family: 'MaplestoryOTFBold';
+         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+         font-weight: normal;
+         font-style: normal;
+    }
+    * {
+       font-family: 'MaplestoryOTFBold';
+    }
+    {% block mycss %}{% endblock %}
+    </style>
+</head>
+<body>
+    {% block mycontent %} <!--이 부분은 basesimple.html을 상속받는 파일들이 자기한테 맞게 할 수 있도록 하겠다는 뜻. exam7~10.html에서 block과 endblock 사이에 내용을 추가함.-->
+    {% endblock %}
+</body>
+</html>

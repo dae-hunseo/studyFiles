@@ -1,0 +1,9 @@
+{% extends 'basesimple.html' %}
+
+{% block mycontent %}
+  <h1>소스 코드를 확인해 주세요...</h1> <!--실행시켜서 f12를 눌러서 form태그의 action속성을 확인하라는 말.-->
+  <form action="{% url 'exam18' %}" method="GET"> <!--submit 버튼을 누르면 secondapp\urls.py에서 name이 exam18인 exam18이 실행된다.-->
+    이름 <input type="text" name="name">
+    <input type="submit">
+  </form>
+{% endblock %}

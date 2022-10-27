@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+//변수를 선언합니다.
+var child = window.open('../htmlexam/first.html', '', 'width=300, height=200');
+var width = screen.width;
+var height = screen.height;
+child.moveTo(0, 0);     //화면 가운데에 브라우저 창이 위치하게 함
+child.resizeTo(width, height);   //서브창의 크기를 전체 화면 크기로 바꿔준다.
+window.setInterval(function () { //2번째 argument에 지정된 ms시간이 지나면, 첫번째 argument에 지정된만큼 크기를 재지정하고 가로축, 세로축을 옮긴다.(점점 화면이 작아짐)
+    child.resizeBy(-20, -20);
+    child.moveBy(10, 10);
+}, 2000);
+</script>
+</head>
+<body>
+</body>
+</html>

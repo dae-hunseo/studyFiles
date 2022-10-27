@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>&lt;select&gt; 태그, &lt;textarea&gt; 태그, file 타입의 &lt;input&gt; 태그</h2>
+<form>
+학년을 선택하세요 : 
+<select name="grade">
+	<option>1학년</option> <!--처음에 첫번째 옵션이 선택된 것으로 보여진다.-->
+	<option>2학년</option>
+	<option>3학년</option>
+	<option>4학년</option> <!--만약 처음에 첫번째 옵션이 아닌 다른 옵션이 선택되도록 하고 싶다면 <option selected>4학년</option> 이렇게 하면 된다.-->
+</select><br>
+<mark>댓글</mark>남기기 :<br>
+<textarea name="memo" rows="10" cols="50"></textarea><br> <!--우측 하단을 클릭해서 드래그하면 텍스트 창의 크기를 키우거나 줄일 수도 있다.-->
+업로드할 파일을 선택하세요 :<br>
+<input type="file" name="files" multiple> <!--첨부파일을 선택하고자 할 때--> <!--multiple 속성을 지정하면 여러 파일을 다중 선택할 수 있다.--> <!--이 파일들을 실제 서버에 업로드 하는건 장고시간에 배움.--> <!--html5부터는 multiple이 추가되면서 여러 파일을 선택하는 것이 가능해졌다.-->
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

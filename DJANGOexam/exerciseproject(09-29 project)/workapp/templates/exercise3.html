@@ -1,0 +1,28 @@
+{% extends 'basesimple.html' %}
+
+{% block mycss %} /*head 부분*/
+    h1{
+        color: green;
+        text-shadow: 3px 3px #66ff33;
+    }
+{% endblock %} /*head 부분*/
+
+{% block mycontent %}
+    <h1>글 작성하기</h1>
+    <hr>
+    {% if input_name %}
+        <h2>{{opinion}}</h2>
+    {% else %}
+    <form method="POST" autocomplete="off" action="/workapp/exercise3/"> <!--studyproject\secondapp\templates\exam6.html 참고함--> <!--action="http://localhost:8000/workapp/exercise3/"--> <!--서버주소와 포트번호는 생략해도 자동으로 찾아줌. 예를들어 포트번호가 뭐든 생략하면 알아서 찾아준다.-->
+        {% csrf_token %} <!--이게 있어야 POST방식을 처리함.-->
+        <p>
+            <input type="text" name="input_name" placeholder="작성자 이름을 입력하세요"><!--id와 name 차이 찾기-->
+        </p>
+        <p>
+            <textarea name="opinion" cols="50" rows="30" placeholder="자신의 의견을 간단히 작성하세요"></textarea>
+        </p>
+        <button type="submit">제출</button> <!--<input type="submit" value="전송">-->
+        <button type="reset">재작성</button> <!--<input type="reset" value="재전송">-->
+    </form>
+    {% endif %}
+{% endblock %} <!--body 부분-->

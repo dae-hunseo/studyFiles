@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if upload.photo %}   <!--사진이 업로드 되고 나서 출력되는 내용-->
+<h2>업로드된 사진의 제목 : {{ upload.title }}</h2> <!--upload는 views.py에서 생성된 변수--> <!--title은 model.py에서 생성된 변수-->
+<p>업로드된 사진의 내용  : {{ upload.content }}</p> <!--content는 model.py에서 생성된 변수-->
+<p>path :{{ upload.photo.path }}</p> <!--path는 하드디스크에 있는 로컬 path. 이건 웹에서 사용하지 못한다. 만약 파이썬에서 open() 같은 함수는 이걸 쓴다.-->
+<p>url : {{ upload.photo.url }}</p> <!--웹에서 사용할때 url 속성을 사용한다.-->
+<img src="{{ upload.photo.url }}" width="200" alt="">
+{% else %} <!--사진을 업로드 하기 전에 처음에 출력되는 내용-->
+<h2>업로드하려는 사진파일과 정보를 입력하세요</h2>
+<form method="post"  action="{% url 'upload' %}" enctype="multipart/form-data"> <!--파일 업로드는 POST 방식 요청이어야만 한다.--> <!--enctype은 인코딩 타입이다. 업로드 되는 파일의 사이즈가 커서 multipart/form-data로 설정한다.-->
+	{% csrf_token %}
+    <p>사진제목 : <input type="text" name = "title"></p>
+    <p>사진내용 : <textarea name = "content" rows="4" cols="30"></textarea></p>
+    업로드할 사진파일 선택 : <input type="file" name="photo"><br> <!--name을 지정해야 한다.-->
+    <input type="submit" value="전송">
+</form>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>9월27일실습1-서대훈</title>
+    <style>
+        h1{
+            text-align:center;
+        }
+        div{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>이벤트 처리 실습</h1>
+<hr>
+<div>
+    <button onclick="change(1);">맑음</button>
+    <button onclick="change(2);">흐림</button>
+    <button onclick="change(3);">비</button><br>
+</div>
+<hr>
+<div>
+    <img src = "">
+</div>
+
+<script>
+    function change(num){   //jsexam폴더 exam25.html update() 참고
+        var domImg = document.getElementsByTagName("img")[0];
+        //var imageName = ['sun', 'cloud', 'rain']
+        switch(num){ //switch-case문 대신 domImg.src = "../images/"+imageName[num]+".png";
+            case 1:
+                domImg.src = "../images/sun.png"; //jsexam폴더 exam24.html updateImage() 참고
+                break;
+            case 2:
+                domImg.src = "../images/cloud.png";
+                break;
+            case 3:
+                domImg.src = "../images/rain.png";
+                break;
+        }
+    }
+
+    //다른 CASE
+    //var pictures = ["../images/sun.png", "../images/cloud.png", "../images/rain.png"];
+    //dom 객체 받고
+    //for문 돌려서 addEventListener 등록
+</script>
+</body>
+</html>

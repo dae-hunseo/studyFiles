@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>9월23일실습1-서대훈</title>
+    <style>
+        h1{
+            color: red;
+        }
+        h3{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<script>
+    while(true){
+        var num = window.prompt("1부터 9사이의 숫자를 입력하시오: "); //입력받은 문자열을 숫자로 바꾸려면 Number()처리 해줘야 함. //숫자가 안 왔는지 확인은 isNan(num) == false
+        if( num<1 || num>9 ){ //num은 문자열이지만 알아서 숫자로 바꿔서 연산을 해줌. //!(num>=1 && num<=9)로 해도 됨.
+            window.confirm("1~9사이의 숫자를 입력해주세요!!!"); //window.alert()함수 쓰는게 더 나을 것 같다고 함.
+            continue; //이게 없어도 결과는 같음.
+        }
+        else{
+            document.write("<h1>" + num + " 단입니다." + "</h1>");
+            document.write("<hr>");
+            for(var i = 1; i<=9; i++){
+                document.write("<h3>"+num+"x"+i+"="+(num*i)+"</h3>");
+            }
+            break;
+        }
+    }
+</script>
+</body>
+</html>

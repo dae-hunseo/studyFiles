@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+    #output {
+        width : 50%;
+        background-color : yellow;
+    }
+</style>
+</head>
+<body>
+<script>
+    window.onload = function() { //exam22_1과 달리 onload 함수로 구현해서 페이지 로드가 끝나면 구현하게 되었다. 그래서 오류가 안 난다.
+    	var outDom = document.getElementById("output");
+    	for(var i=1; i < 6; i++)
+			outDom.innerHTML +=
+				    "<h4>"+document.getElementById("t"+i)+"</h4>";
+    }
+</script>
+<h1 id="t1">컨텐트1</h1>
+<h2 id="t2">컨텐트5</h2>
+<p id="t3">컨텐트2</p>
+<div id="t4">컨텐트2</div>
+<img id="t5" src="../images/totoro.png" width="100">
+<hr>
+<div id="output"></div>
+</body> <!--여기까지 수행되면 페이지 로드가 끝난다. 그리고 나서 window.onload 함수가 수행된다.-->
+</html>
+
+

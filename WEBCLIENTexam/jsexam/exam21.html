@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 id="test">DOM 객체를 찾자</h1>
+<h1>그래 DOM 객체를 찾자</h1>
+<hr>
+<script>
+var dom = document.getElementsByTagName("h1");
+console.log(dom);               //콘솔은 화면상에는 안보이고 개발자도구(f12) 눌러서 Console에서 봐야함.
+console.log(dom.length);
+console.log(dom[0]);
+console.log(dom[0].textContent); // textContent는 옛날에는 innerText이라는 속성으로 썼음
+console.log(dom[0].innerHTML);
+console.log(dom[1]);
+console.log(dom[1].textContent); // textContent는 옛날에는 innerText이라는 속성으로 썼음
+console.log(dom[1].innerHTML);
+console.log("------------------------------")
+dom = document.getElementById("test");
+console.log(dom);
+console.log(dom.textContent);
+window.setTimeout(function() {
+	dom.innerHTML = "오늘은 월요일";
+	dom.style.color ="red";
+	dom.style.backgroundColor ="lime"; // background-color인데 빼기(-)기호 빼고 앞글자를 대문자로 해줌.
+}, 9000); //ms단위라 9000이면 9초
+</script>
+</body>
+</html>

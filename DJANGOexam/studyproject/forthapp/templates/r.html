@@ -1,0 +1,64 @@
+{% extends 'basesimple.html' %}
+<!--http://localhost:8000/forthapp/R/ 로 하면 실행됨-->
+{% block mycss %}
+    td {
+        border-bottom : 1px dotted gray;
+    }
+    td:nth-child(1) {
+        width : 100px;
+    }
+    td:nth-child(2) {
+        width : 50px;
+    }
+    td:nth-child(3) {
+        width : 200px;
+    }
+    td:nth-child(4), td:nth-child(5)  {
+        width : 80px;
+        text-align : center;
+    }
+    tr:hover {
+        background : pink;
+    }
+    a {
+        text-decoration : none;
+    }
+    a.btn {
+        border : 1px solid green;
+        padding : 2px;
+    }
+    a.btn:hover {
+        background-color : lime;
+    }
+{% endblock %}
+
+{% block mycontent %}
+  {% if meetings %}
+    <h2> 미팅 정보 리스트입니당</h2>
+    <hr>
+    <table>
+    {% for meeting in meetings %} <!--views.py에서 DB의 모든 데이터를 받아서 meetings 변수에 저장했는데 그걸 딕셔너리로 'mettings':mettings 를 해줬기 때문에 여기서 mettings(딕셔너리에서 문자열인 key임)는 모든 데이터들을 뜻한다.-->
+      <tr>
+        <td><a href="{% url 'R2' meeting.id %}">{{ meeting.name }}</a></td> <!--href값을 보면 'R2' metting.id는 주소창에서 R2/ 뒤에 id값이 와야한다는 뜻이다. id는 내가 데이터를 저장할때 따로 저장해주지 않았다. 프로그램이 내가 데이터를 저장할때 순서대로 인덱스처럼 1부터 자동으로 카운트해줬다.-->
+        <td>{{ meeting.personnel }}명</td>
+        <td>{{ meeting.meetingdate }}</td>
+        <td><a href="{% url 'D' meeting.id %}">삭제</a></td> <!--D나 U는 뒤에 id값이 와야함. id값을 가지고 어떤 항목을 수정하거나 삭제할지 구분함.-->
+        <td><a href="{% url 'U' meeting.id %}">수정</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+    <hr>
+ {% elif meeting %}
+    <h2>요청한 {{ meeting.id }} 번의 미팅 내용 입니당</h2>
+    <p> {{ meeting.title }}</p>
+    <hr>
+ {% else %}
+    {% if msg %}
+       <h2>{{ msg }}</h2>
+       <hr>
+    {% endif %}
+ {% endif %}
+
+ <a class="btn" href="{% url 'C' %}">작성 화면</a>
+ <a class="btn" href="{% url 'R1' %}">리스트 화면</a><br>
+{% endblock %}

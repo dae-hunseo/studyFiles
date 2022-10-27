@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	var child = window.open('', '', 'width=300, height=200');
+	child.moveTo(0, 0);
+
+	setInterval(function() { //window.setinterval이지만 window는 생략 가능
+		child.moveBy(10, 10); //서브창의 위치를 가로10, 세로10만큼 옮기고
+		child.document.write(new Date()); //Date객체를 생성해 현재 날짜를 (toString()이 자동 실행되어)문자열로 생성해 document 객체에 넘겨주고, document 객체는 write()를 이용해 서브창에 현재 날짜를 출력한다.
+	}, 1000); //1초에 한번씩
+</script>
+</head>
+<body>
+</body>
+</html>

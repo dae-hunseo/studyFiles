@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a {
+            text-decoration : none;
+        }
+        a:hover {
+            font-weight : bold;
+            background-color : lime;
+            color : magenta;
+        }
+        img:hover {
+            opacity : 0.3; /* 0.0~1.0(완전불투명)     */
+        }
+        h1 {
+            background-color : pink;
+            width : 40%; /*document 영역(브라우저 화면 크기) 전체 width에서 40%만큼 쓰겠다.*/
+            margin: auto; /*브라우저 화면 가운데에 h1 태그 영역이 위치하도록 함.*/
+            text-align: center; /*텍스트를 h1의 가운데로 정렬함*/
+        }
+        img {
+            width : 30%; /*document 영역 전체 width에서 30%만큼 쓰겠다.*/
+        }
+        div{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>CSS 학습(1)</h1>
+<hr>
+<div> <!--위에서 style을 div는 text-align:center;를 적용해서 아래 네이버, 다음, 구글이 화면 가운데 정렬됨.-->
+    <a href="http://www.naver.com/">네이버</a>
+    <a href="http://www.daum.net/">다음</a>
+    <a href="http://www.google.com/">구글</a>
+    <hr>
+    <figure>
+        <img src="../images/totoro.png"> <!--width="300"> -->
+        <figcaption>겨울왕국 올라프</figcaption> <!--이미지에 대한 제목-->
+    </figure>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>DOM 프로그래밍</h1>
+<hr>
+<button onclick="go('http://www.naver.com/');">네이버로가자</button>
+<button onclick="go('http://www.daum.net/');">다음으로가자</button>
+<button onclick="go('http://www.google.com/');">구글로가자</button><br>
+
+<script>
+function go(url) {
+    var answer = window.confirm("정말 갈겨?"); //사용자에게 한 번 더 확인을 받는다.
+    if (answer) {
+        location.href = url; //go함수의 매개변수인 url의 링크로 연결된다.
+    }
+}
+</script>
+</body>
+</html>

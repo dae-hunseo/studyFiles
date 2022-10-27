@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>자바스크립트의 객체 생성과 사용(객체리터럴)</h1>
+<hr>
+<script src="util.js"></script>
+<script>
+var student = {
+			name : '둘리',
+			kor : 90,
+			eng : 80,
+			math : 95,
+			getSum : function() {
+				return this.kor+this.eng+this.math;
+			},
+			getAvg : function() {
+				return this.getSum() / 3 ;
+			},
+			toString : function() { //오버라이딩
+				return this.name+"학생의 총점은 "+
+				               this.getSum()+"입니다.";
+			}
+}
+write("총점 : "+student.getSum(), "h3");
+write("평균 : "+student.getAvg().toFixed(2), "h3"); //정수가 됐든 실수가 됐든 다 Number타입인데 Number타입에 .을 붙이면 객체로 바뀐다. 자바스크립트는 어떤 것이든 .을 붙이면 객체로 바뀐다. Number 클래스 내장함수인 toFixed()로 소수점 이하를 몇번째 자리까지 나타낼지 지정할 수 있다.
+writeColor(student, "h3", "red");
+writeColor(student.toString(), "h3", "blue");
+</script>
+</body>
+</html>
+
+
+
+
+

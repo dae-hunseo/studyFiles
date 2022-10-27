@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p:nth-child(2) { /*부모한테서 2번째 자식인 p태그*/
+            color : red;
+        }
+        p:nth-of-type(2) { /*2번째로 쓰인 p태그*/
+            color : blue;
+        }
+        section > h1 { /*자식*/
+            color : green;
+        }
+        section h1 { /*자손*/
+            background-color : pink;
+        }
+        img {
+            width : 150px;
+        }
+        img[src$=gif] { /*파일명이 gif로 끝나는*/
+            border : 1px dotted red;
+        }
+    </style>
+</head>
+<body>
+<div>
+<h3>어린 왕자</h3>
+<p>1장  <!--p:nth-child(2)-->
+<p>2장 </p> <!--p:nth-of-type(2)-->
+</div>
+<section>
+    <h1>섹션제목</h1>
+    <article>
+        <h1>아티클제목</h1>
+    </article>
+</section>
+<img src="../images/duke.png">
+<img src="../images/java_duke.gif">
+</body>
+</html>

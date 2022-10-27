@@ -1,0 +1,18 @@
+{% extends 'basesimple.html' %} <!--basetemplates\basesimple.html 상속-->
+
+{% block mycss %} /*basesimple.html에서 이 블록의 내용의 정의되지 않고 block mycss만 선언되었음.*/
+  img {
+    width : 200px;
+    height : 200px;
+  }
+{% endblock %}
+{% block mycontent %} <!--basesimple.html에서 이 블록의 내용의 정의되지 않고 block mycontent만 선언되었음.-->
+  <h1>오늘의 저녁 메뉴</h1>
+  <h2>{{ pick }} 입니다.</h2>  <!--템플릿변수 pick-->
+  <img src="/static/images/clover.png"> <!--settings.py에서 199~123번째 라인에서 'static/'을 해주면 staticfiles로 가도록 설정해줬음.--> <!--밑의 코드와 다르게 localhost:포트번호 를 안 줬음-->
+  <img src="http://localhost:8000/static/images/duke.png">
+  {% load static %}
+  <img src="{% static 'images/1.jpg' %}"> <!--이 방법(static)을 쓰면 유지보수가 좋다는데 나중에 static을 예를 들어 mystatic으로 바꾸면 자동으로 이렇게 코드에 적용한것도 mystatic으로 바뀐다고 한다.-->
+  {% static "images/food.jpg" as myfood %} <!--images폴더의 food.jpg를 myfood로 부르겠다. 이렇게 하면 나중에 이름이 바꼈을때 -->
+  <img src="{{ myfood }}">
+{% endblock %}

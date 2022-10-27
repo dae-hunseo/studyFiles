@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>함수 정의와 활용(선언식 함수 정의)</h1> <!-- -->
+<hr>
+<script>
+  function f1(){
+    return "안녕? 자바스크립트";
+  }
+  function f2(pname){
+    return "안녕? " + pname;
+  }
+  function f3(pname){
+    //매개변수가 없을때를 처리하기 위한 코드
+    if (pname == undefined)
+      pname = "R";
+
+    return "안녕? " + pname;
+  }
+  function f4(pname){
+    if(pname)
+      document.write("<h3>"+pname+"</h3>");
+    else //pname이 없으면 undefined로 되는데 undefined는 False로 처리됨.
+      document.write("<h3>"+new Date()+"<h3>"); //new Date는 자바스크립트가 내장하고 있는 Date라는 API인데 Date라는 클래스를 객체 생성함.
+  }
+  document.write(f1() + "<br>");
+  document.write(f2("파이썬") + "<br>");
+  document.write(f1("R") + "<br>"); //매개변수가 없는데 argument를 전달해도 자바 스크립트는 에러가 안 난다.
+  document.write(f2() + "<br>");    //매개변수가 필요한데 argument를 전달 안 해도 자바 스크립트는 에러가 안 난다.
+  document.write(f3() + "<br>");
+  document.write(f4("오늘은 월요일") + "<br>"); //f4()는 리턴문이 없기 때문에 자동으로 undefined가 리턴되어 document.write()가 undefined를 출력한다.
+  document.write(f4() + "<br>");
+</script>
+<hr>
+<script>
+  document.write(f1() + "<br>");
+  document.write(f2("파이썬") + "<br>");
+  document.write(f1("R") + "<br>"); //매개변수가 없는데 argument를 전달해도 자바 스크립트는 에러가 안 난다.
+  document.write(f2() + "<br>");    //매개변수가 필요한데 argument를 전달 안 해도 자바 스크립트는 에러가 안 난다.
+  document.write(f3() + "<br>");
+  document.write(f4("오늘은 월요일") + "<br>"); //f4()는 리턴문이 없기 때문에 자동으로 undefined가 리턴되어 document.write()가 undefined를 출력한다.
+  document.write(f4() + "<br>");
+</script>
+</body>
+</html>

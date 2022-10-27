@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-3 my-3 bg-dark text-white"><h1>올라프를 소개해용(2)</h1></div>
+
+{% load static %}
+{% if result %}
+ <div class="card" style="width:200px">
+    <img class="card-img-top" src="{% static 'images/olaf1.png' %}" alt="Card image" style="width:100%"> <!--exam14에서 한 것과 달리 static 태그를 쓰면 static이 setting.py에서 변경되면 바뀔때마다 그때그때 적용해주기 때문에 유연한 적용이 된다. 대신 static 태그를 통해 이미지를 로드할때는 위에 {% load static %}를 미리 수행을 시켜서 static에 대한 정보를 적용하게끔 해야한다.-->
+    <div class="card-body">
+      <h4 class="card-title">울라프1</h4>
+      <p class="card-text">울라프는 겨울 왕국에서 가장 인기있는 캐릭터입니다요.</p>
+      <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+ </div>
+{% else %}
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h4 class="card-title">올라프2</h4>
+      <p class="card-text">울라프는 겨울 왕국에서 가장 인기있는 캐릭터입니다요.</p>
+      <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+    <img class="card-img-bottom" src="{% static 'images/olaf2.png' %}" alt="Card image" style="width:100%">
+  </div>
+{% endif %}
+<hr>
+<button type="button" class="btn btn-outline-primary"  onclick='alert("{{ num1|add:100 }}")'>100 더하기</button>
+<button type="button" class="btn btn-outline-success" onclick='displayNum()'>실수 데이터 출력(소수점 아래 둘째짜리까지)</button>
+<output></output>
+<script>
+function displayNum() {
+  document.querySelector("output").innerHTML = "<h3>" + {{num2|floatformat:2}} + "</h3>";
+  //$('output').html("<h3>" + {{num2|floatformat:2}} + "</h3>");
+  // document.getElementsByTagName("output")[0].innerHTML = "<h3>" + {{num2|floatformat:2}} + "</h3>";
+}
+</script>
+{% endblock %}

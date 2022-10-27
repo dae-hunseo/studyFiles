@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+    h1 {
+        color : green;
+    }
+</style>
+</head>
+<body>
+<script>
+    var num=window.prompt("숫자를 한 개 입력하세요.");
+    document.write("<h1>"+(Number(num)+10)+"</h1>"); // 문자열 결합, 덧셈 //Number()는 문자열을 숫자로 바꿔줌. //+연산자는 문자열을 이어주는 기능도 있기 때문에 숫자 연산을 하려면 Number()을 해줘야 한다.
+    document.write("<h1>"+(num-10)+"</h1>"); //+를 제외한 연산자들은 Number을 안 써줘도 자동으로 문자열을 숫자로 바꿔준다.
+    document.write("<h1>"+(num*10)+"</h1>"); //+를 제외한 연산자들은 Number을 안 써줘도 자동으로 문자열을 숫자로 바꿔준다.
+    document.write("<h1>"+(num/10)+"</h1>"); //+를 제외한 연산자들은 Number을 안 써줘도 자동으로 문자열을 숫자로 바꿔준다.
+    document.write("<h1>"+(num%100)+"</h1>"); //+를 제외한 연산자들은 Number을 안 써줘도 자동으로 문자열을 숫자로 바꿔준다.
+</script>
+</body>
+</html>

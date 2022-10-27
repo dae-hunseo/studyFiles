@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>DOM 프로그래밍</h1>
+<hr>
+<button>제목변경</button> <!--exam24_1과 달리 버튼태그에서 이벤트 처리에 대한 코드를 생략하고 script 태그 내에서 작성함.-->
+<button>제목칼라변경</button>
+<button>이미지변경</button><br>
+<img src="../images/1.jpg" width="200">
+
+<script>
+function updateTitle() {
+    var dom = document.getElementsByTagName("h1")[0];
+    var msg = window.prompt("제목을 입력하세요");
+    dom.textContent = msg;
+}
+function updateColor() {
+    var dom = document.getElementsByTagName("h1")[0];
+    var randomValue = Math.random();
+    var colorCode = '#'+Math.round(Math.random() * 0xffffff).toString(16);
+    console.log(colorCode);
+    dom.style.color = colorCode;
+}
+function updateImage() {
+    var dom = document.getElementsByTagName("img")[0];
+    var randomValue = Math.random();
+    var imageName = Math.floor(randomValue * 10) + 1;
+    dom.src = "../images/"+imageName+".jpg";
+}
+
+var doms = document.getElementsByTagName("button");
+doms[0].onclick = updateTitle //고전 이벤트 모델 적용
+doms[1].onclick = updateColor //고전 이벤트 모델 적용
+doms[2].onclick = updateImage //고전 이벤트 모델 적용
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset='utf-8'>
+    <title>Simple Map</title>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy81EbO46BRSnX1DOgg_F84bhsdbku2z4" ></script>
+    <style type="text/css">
+       #map {
+        height: 600px;
+        width: 100%; 
+      }
+    </style>   
+  </head>
+  <body>
+    <h1>구글 지도 출력</h1>
+    <hr>
+    <div id="map"></div>
+     <script>
+		var dom = document.getElementById("map");
+		if(dom) {
+			var latlng = { lat: 37.5096357, lng: 127.0555218}
+			var map = new google.maps.Map(dom, {
+            	center: latlng,
+            	zoom: 16
+          	});
+			var marker = new google.maps.Marker({position: latlng, map: map});    //여기까지는 ggmap2.html과 같음. //생성된 마커객체를 변수에 담음.
+			
+			var contentString = "<h3>우리가 학습하는 곳이에요ㅎㅎㅎ<img src='../../images/clover.png' width='20'></h3>"; //여기서 폴더 경로를 2번 올라가서 내랴거야지 images 폴더에 갈 수 있음
+			
+			var infowindow = new google.maps.InfoWindow({
+			    content: contentString
+			});
+			
+			marker.addListener('click', function() {  //마커를 클릭하면 메시지가 뜸. //addEventListener가 아닌 addListener
+			    infowindow.open(map, marker); //지도와 마커릐
+			});
+        }     
+    </script>
+  </body>
+</html>

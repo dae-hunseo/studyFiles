@@ -1,0 +1,11 @@
+{% extends 'basesimple.html' %}
+
+{% block mycontent %}
+
+    <p>요청시간: {{ current_date|date:"Y년 m월 d일 H시 i분 s초" }}</p> <!--date:다음에 문자열 사이에 공백을 주면 안 됨-->
+    <h3>선택된 상품:</h3>
+
+    <img src = "/static/images/{{image_link}}.jpg"> <!--<img src = {{image_link}}>-->
+    <br>
+    <a href="/workapp/product1/" style="text-decoration:none">상품 선택 화면으로</a>
+{% endblock %}

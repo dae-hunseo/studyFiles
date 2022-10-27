@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>세 가지 이벤트 모델</h1>
+<hr>
+<h1 onclick="f1(this);">인라인 이벤트 모델</h1> <!--this를 f1()의 매개변수 t로 전달한다. 여기서는 이 h1태그 내용을 가리키는 듯.-->
+<hr>
+<h1 id="t1">고전 이벤트 모델</h1>
+<hr>
+<h1 id="t2">표준 이벤트 모델</h1>
+<hr>
+<script>
+    //console.log(this); //이것처럼 전역적인 곳에서의 this는 window 객체를 참조한다.
+	function f1(t) {
+		alert(t.textContent);
+	}
+	var dom2 = document.querySelector('#t1');
+    var dom3 = document.querySelector('#t2');
+	function f2(e) { //exam23의 f2()와 f3()을 통합한듯 //자바 스크립트 엔진이 함수를 호출할 때 발생된 이벤트 객체 정보를 매개변수에 전달해준다.
+		alert(e.target.textContent);    //e.target으로 DOM객체를 추출함.
+		alert(this.textContent);    //여기서의 e.target과 this는 똑같다. 이벤트 핸들러 함수 안에서의 this는 이벤트가 발생된 대상객체를 가리킨다. //즉 위에 코드와 똑같이 동작해서 알림창이 2번 동작하게 한 것 같다.
+	} 
+    dom2.onclick = f2;                      //f2라는 함수를 등록만함
+    dom3.addEventListener("click", f2);     //f2라는 함수를 등록만함. 실제 호출은 자바 스크립트 엔진이 해준다.
+</script>
+</body>
+</html>

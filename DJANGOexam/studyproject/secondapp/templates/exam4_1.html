@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+{% for num in numbers %}
+  <li>{{num}}</li>
+{% endfor %} <!--이건 템플릿파일에서만 쓸 수 있는 템플릿 태그라 endfor라는 태그를 주면 for태그와 endfor 태그 사이에 오는 내용이 반복처리되는 내용이라고 정의한다.-->
+</ul>
+</body>
+</html>

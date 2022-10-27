@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>컨텐트1</h1>
+<h1>컨텐트2</h1>
+<h1>컨텐트3</h1>
+<h1>컨텐트4</h1>
+<h2>컨텐트5</h2>
+<script src="util.js"></script>
+<script>
+    hr();
+	var h1doms = document.getElementsByTagName("h1"); //이 페이지에 있는 모든 h1 태그를 찾아라. 그리고 그 태그들이 담긴 유사배열객체가 리턴된다.
+	writeColor(h1doms.length, "h3", 'blue');
+	for(var i=0; i < h1doms.length; i++)
+		writeColor(h1doms[i].innerHTML, "h3", "red");
+	var h2doms = document.getElementsByTagName("h2");
+	write(h2doms.length, "h3");
+	writeColor(h2doms[0].innerHTML, "h3", "blue");
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center"> <!--jumbotron을 적용해서 스타일이 적용된다.-->
+  <h1>Django+AJAX+Bootstrap</h1>
+  <h4>AJAX 기술을 이용해서 Django 서버 프로그램을 요청합니다.</h4>
+</div>
+<div class="card-deck">
+  <div class="card bg-primary"> <!--primary(파랑) 색상-->
+    <div class="card-body text-center"> <!--card-body 클래스를 받아서 아마 카드의 중앙에 위치하게 되는 것 같다.-->
+      <p id="파란색" class="card-text" onclick="ajax_proc(this)" style="border:1px dotted black">클릭해 보셔용</p> <!--this는 클릭된 p태그에 대한 DOM객체를 전달한다.-->
+    </div>
+  </div>
+  <div class="card bg-warning"> <!--warning(노랑) 색상-->
+    <div class="card-body text-center">
+      <p id="노란색" class="card-text" onclick="ajax_proc(this)" style="border:1px dotted black">클릭해 보셔용</p>
+    </div>
+  </div>
+  <div class="card bg-success"> <!--success 색상(녹색)-->
+    <div class="card-body text-center">
+      <p id="녹색" class="card-text" onclick="ajax_proc(this)" style="border:1px dotted black">클릭해 보셔용</p>
+    </div>
+  </div>
+  <div class="card bg-danger"> <!--danger 색상(빨강)-->
+    <div class="card-body text-center">
+      <p id="빨간색" class="card-text" onclick="ajax_proc(this)" style="border:1px dotted black">클릭해 보셔용</p>
+    </div>
+  </div>
+</div>
+<script>
+    function ajax_proc(target) {
+      let xhr = new XMLHttpRequest();
+      xhr.onload = function () { //박스 내 p태그 영역을 클릭하면 함수가 호출됨.
+        let obj = JSON.parse(xhr.responseText);
+        target.innerHTML += "<br>"+target.id+"박스에서의 AJAX 요청 : "+obj.time; //target.id는 html코드에서 id속성값을 가져온다. 파란색, 노란색, 녹색, 빨간색을.
+      }
+      xhr.open("GET", "/secondapp/json2/") //GET방식으로 뷰의 json2함수를 호출함
+      xhr.send()
+    }
+</script>
+{% endblock %}

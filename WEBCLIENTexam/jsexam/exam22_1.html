@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+    #output {
+        width : 50%;
+        background-color : yellow;
+    }
+</style>
+</head>
+<body>
+<script>
+   	var outDom = document.getElementById("output");
+   	for(var i=1; i < 6; i++)
+		outDom.innerHTML +=
+			    "<h4>"+document.getElementById("t"+i)+"</h4>";
+</script> <!--script 태그가 위에 있어서 id가 outpur인 태그가 없는데(null) += 연산을 해주니 오류가 난다. 이 script 태그가 div 태그 밑에 있어야 한다.-->
+<h1 id="t1">컨텐트1</h1>
+<h2 id="t2">컨텐트5</h2>
+<p id="t3">컨텐트2</p>
+<div id="t4">컨텐트2</div>
+<img id="t5" src="../images/totoro.png" width="100">
+<hr>
+<div id="output"></div>
+
+</body>
+</html>

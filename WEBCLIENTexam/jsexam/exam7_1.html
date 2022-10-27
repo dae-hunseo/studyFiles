@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>자바스크립트의 연산자(2)</h1>
+<hr>
+<pre>
+<script>
+    // 3번
+	for(var su=1; su < 4; su++) { //한번에 숫자를 3번 연이어 입력받고 아래의 if-else문을 실행한다.
+		var num=window.prompt("채크하려는 숫자를 입력하세요.");
+		if(isNaN(num) || num == '' || num == null ) {
+			document.writeln("숫자를 입력해 주세요!!!");
+		} else {
+			num % 2 == 0 && document.writeln(num+"는 짝수");
+			num % 2 == 0 || document.writeln(num+"는 홀수");
+		}
+	}
+</script>
+</pre>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>배열 객체의 주요 메서드 활용</h1>
+<hr>
+<script src = "util.js"></script>
+<script>
+var ary1 = ['둘리', '또치', '도우너', '희동이', '고길동'];
+writeNewLine(ary1);
+writeColor(ary1[3], 'h3', 'green');
+writeColor(ary1[5], 'h3', 'red'); //undefined
+writeColor(ary1.length, 'h3', 'blue');
+
+var ary2 = ary1.sort(); //배열객체.sort()를 하면 바뀐 것을 리턴도 해주고 배열객체 자체도 바뀐다.
+writeNewLine(ary1);
+writeNewLine(ary2);
+hr();
+
+var ary3 = [30, 11, 5, 27, 9];
+writeNewLine(ary3);
+//var ary4 = ary3.sort();
+var ary4 = ary3.sort(function(a, b){ return a-b;}); //return b-a를 하면 내림차순(큰 수에서 작은 수로) 정렬을 함. //sort()의 매개변수로 전달하는 람다함수의 작동 원리는 공개되지 않아서 모름.
+writeNewLine(ary3);
+writeNewLine(ary4);
+hr();
+
+var ary5 = [ ];
+ary5.push(100);
+ary5.push(200);
+ary5.push(500);
+writeNewLine(ary5);
+</script>
+</body>
+</html>

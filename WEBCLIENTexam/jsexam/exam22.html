@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+    #output {
+        width : 50%;
+        background-color : yellow;
+    }
+</style>
+</head>
+<body>
+<h1 id="t1" onclick="updateBgColor('green');">컨텐트1</h1> <!--updateBgColor는 사용자 생성 함수-->
+<h2 id="t2" onclick="updateBgColor('pink');">컨텐트5</h2>
+<p id="t3">컨텐트2</p>
+<div id="t4">컨텐트2</div>
+<img id="t5" src="../images/totoro.png" width="100">
+<hr>
+<div id="output"></div> <!--태그의 내용물이 없지만 밑에 script 태그에서 출력될 내용물을 넣어줌.-->
+<script>
+    var outDom = document.getElementById("output");
+    for(var i=1; i < 6; i++) //만약 밑에서 +=를 안하고 =만 했다면 맨 마지막(i=5)만 출력됐을 것임.
+		outDom.innerHTML +=
+			    "<h4>"+document.getElementById("t"+i)+"</h4>"; //id에 't'가 들어가있으면 <h4>크기로 출력 //dom객체.innerHTML은 내용을 화면에 출력한다. 즉 id에 t가 들어가는 것들의 태그들이 출력되는 것이다.
+    function updateBgColor(c){
+        outDom.style.backgroundColor = c;   //배경색이 바뀜
+        outDom.innerHTML = '<h3>재미있는 자바스크립트</h3>'; //기존 내용이 사라지고 이 내용만 나타남. //outDom.textContent로 하면 <h3>태그도 같이 출력됨. 반면 innerHTML은 태그는 태그로 인식한다. 즉 텍스트로만 되어있거나 태그도 텍스트로 인식하길 원하면 textContent
+    }   //만약 위에 코드를 outDom.innerHTML += '<h3>재미있는 자바스크립트</h3>';로 하면 기존 내용에 "재미있는 자바스크립트" 문구가 추가된다.
+</script>
+</body>
+</html>
+
+
+

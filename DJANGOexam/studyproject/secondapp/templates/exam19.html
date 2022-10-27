@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>지금은 언제일까?</h1>
+<hr>
+<!-- https://docs.djangoproject.com/en/4.0/ref/templates/builtins/ -->
+<ul>
+    <li>{{ current_date  }}</li>
+    <li>{{ current_date|date }}</li> <!--|를 파이프기호라 하는데 날짜만 출력하고 싶으면 파이프기호 뒤에 date만-->
+    <li>{{ current_date|date:"Y년 m월 d일 H시 i분 s초" }}</li> <!--https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#std-templatefilter-date 참고-->
+    <li>{{ current_date|date:"j일, d일"}}</li> <!--단위를 맞춰주기 위해 j는 한자리 숫자는 앞에 0을 붙임.-->
+    <li>{{ current_date|time }}</li> <!--시간과 분단위까지만 출력하려면 time을 출력-->
+    <li>{{ current_date|time:" H시 i분 s초" }}</li> <!--필터링을 이용해 우리가 원하는 날짜와 시간을 뽑아낸다.-->
+</ul>
+</body>
+</html>

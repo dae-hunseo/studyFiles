@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <style>
+        button:nth-of-type(1) {
+	color : red;
+	font-size : 1.5em;
+        }
+        button:nth-of-type(2) {
+	color : blue;
+	font-size : 1.5em;
+        }
+        button:nth-of-type(3) {
+	color : green;
+	font-size : 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="updateColor('red');">빨강색</button>
+    <button onclick="updateColor('blue');">파랑색</button>
+    <button onclick="updateColor('green');">녹&nbsp;&nbsp;색</button> <!--공백은 &nbsp로 함-->
+    <hr>
+    <h2 id = "currentDate" ></h2>
+
+    <script>
+		var d = new Date(Date.now());
+		var outDom = document.getElementById("currentDate");
+		outDom.innerHTML = '<h2>오늘은 '+d.getFullYear()+ '년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일입니다.</h2>';
+		function updateColor(c){
+            outDom.style.color = c;   //글자색이 바뀜
+        }
+    </script>
+</body>
+</html>
+
