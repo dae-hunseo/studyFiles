@@ -232,7 +232,7 @@ score$result <- ifelse(score$sum >= 200,
 score #값을 출력해서 결과를 확인해봄
 
 summary(score$result)
-table(score$result)
+table(score$result)    #특정 열의 중복된 값이 몇 개 인지 종류별로 정리해서 보여준다.
 summary(factor(score$result)) #팩터형으로 바꿔서 summary() 실행. 위에 위에 코드와 비교.
 score$result = factor(score$result) #score객체의 result열은 "pass"나 "fail"이므로 팩터형으로 변환해서 저장해준다.
 str(score)
@@ -303,9 +303,9 @@ subset(emp,!is.na(emp$comm))
 View(emp)
 # select ename,sal from emp where sal>=2000
 subset(emp, emp$sal>= 2000, 
-       c("ename","sal"))    #급여가 2000이상인 직원들의 급여와 이름만 출력함.
+       c("ename","sal"))    #급여가 2000이상인 직원들의 급여와 이름만 출력함. #포지션 아규먼트로 값을 넘겨줌. 순서 지켜야 함.
 subset(emp, select=c("ename","sal"), 
-       subset= emp$sal>= 2000) #위의 코드를 키워드 아규먼트로 값을 넘겨준다.
+       subset= emp$sal>= 2000) #위의 코드를 키워드 아규먼트로 순서 상관없이 값을 넘겨준다.
 emp[emp$sal>=2000,c("ename","sal")]
 
 # select ename,sal from emp where sal between 2000 and 3000
