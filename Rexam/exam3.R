@@ -190,19 +190,23 @@ for(num in 1:10){
                      "7"="A","8"="B","9"="C","10"="D","ㅋ"),"\n") #"ㅋ"는 else문의 처리결과라고 보면 된다. 
 }
 
+
+#11/01 시작
 #for문
 #for 실습
-for(data in month.name) 
+for(data in month.name) #12번 반복된다.
   print(data)
-for(data in month.name)print(data);print("hello")
-for(data in month.name){print(data);print("hello")}
+for(data in month.name)print(data);print("hello") #수행할 내용을 for문 밑이 아닌 옆에 뒀다. 파이썬이었으면 에러가 발생한다. 세미콜론(;)에 의해 명령어를 구분지어줘서 반복문에선 print(data);만 수행된다.(그게 아니라 중괄호가 없으면 코드 하나만 자동 출력 아닌가?)
+#뒤의 print("hello")는 반복문과 별개로 한 번만 수행된다.
+
+for(data in month.name){print(data);print("hello")} #여기선 뒤의 print("hello")도 같이 수행된다.
 
 for(n in 1:5)
-  cat("hello?","\n")
+  cat("hello?","\n") #5번 반복
 
 for(i in 1:5){
   for(j in 1:5){
-    cat("i=",i,"j=",j,"\n")
+    cat("i=",i,"j=",j,"\n") #25번 반복
   }
 }
 # 구구단
@@ -214,17 +218,17 @@ for(dan in 1:9){
 }
 
 
-bb <- F
+bb <- F #플래그 변수 설정. 플래그는 ON/OFF의 의미를 가진다.
 for(i in 1:9){
   for(j in 1:9){
     if(i*j>30){
-      bb<-T
+      bb<-T #맨 바깥의 for문도 종료되도록 bb를 TRUE로 설정
       break
     } 
     cat(i,"*",j,"=",i*j,"\t")
   }
   cat("\n")
-  if(bb) #bb가 TRUE이면
+  if(bb) #bb가 TRUE이면 바깥의 for문도 종료
     break
 }
 
@@ -240,25 +244,25 @@ for(i in 1:9){
 }
 
 #while문
-i<-1
+i <- 1
 while(i <= 10){
   cat(i,"\n")
   i <- i+1
 }
 cat("종료 후 :",i,"\n")
 
-i<-1
-while (i<=10) {
+i <- 1
+while (i<=10) { #무한 루프(i값 변경X)
   cat(i,"\n")
 }
 
-i<-1
+i <- 1
 while (i<=10) {
   cat(i,"\n")
   i<-i+2
 }
 
-i<-1
+i<-1 #-1아님. 위에도 이렇게 되어있는거 다 띄어쓰기 함.
 while (i<=10) {
   cat(i,"\n")
   i<-i+1
@@ -268,10 +272,10 @@ while (i<=10) {
 
 
 for(data in month.name) 
-  print(data)
+  print(data) #print는 데이터로 처리
 
 for(data in month.name) 
-  cat(data)
+  cat(data) #cat은 메시지로 처리. 그리고 행바꿈도 자동으로 X
 
 sum <- 0
 for(i in 5:15){
@@ -288,11 +292,11 @@ for(i in 5:15){
     break
   }
   sum <- sum + i
-  cat(i,":",sum,"\n")
+  cat(i,":",sum,"\n") #위의 print문을 cat으로 바꾼 코드. "\n"을 붙여서 실행결과가 똑같이 된다.
 }
 
 sum <-0
-for(i in 5:15){
+for(i in 5:15){ #위의 break문을 continue문으로 바꾼 코드. break일때와 달리 i가 10일때만 제외하고 반복문이 끝까지 실행된다.
   if(i%%10==0){
     next;  #continue
   }

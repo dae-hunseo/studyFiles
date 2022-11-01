@@ -133,6 +133,6 @@ for(i in 1:length(LETTERS)){
   cat("\"",LETTERS[i],letters[i], "\"",sep="")
 }
 #답안 코드
-alpha<-paste(LETTERS, letters, sep="")
+alpha<-paste(LETTERS, letters, sep="") #신기하게도 같은 인덱스끼리 붙여서 출력한다.
 alpha
 
