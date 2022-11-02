@@ -266,7 +266,7 @@ testParamType2(LETTERS)
 #stop() 함수도 알고 가자
 testError1 <- function(x){
   if(x<=0)
-    stop("양의 값만 전달 하숑!! 더 이상 수행 안할거임..") #인위적으로 에러를 발생시킴.
+    stop("양의 값만 전달 하숑!! 더 이상 수행 안할거임..") #인위적으로 에러를 발생시키고 프로그램을 종료시킴. 프로그램을 종료시키지 않으려면 309번째 라인의 tryCatch문 사용.
   return(rep("테스트",x)) #rep()는 벡터를 만들어주는 함수다. 두번째 매개변수 숫자만큼 첫번째 매개변수를 반복해서 벡터를 만든다.
 }
 
@@ -278,10 +278,10 @@ testError1(0)
 #warning() 함수
 testWarn <- function(x){
   if(x<=0)
-    stop("양의 값만 전달 하숑!! 더 이상 수행 안할거임..") #에러를 인위적으로 발생시킴.
+    stop("양의 값만 전달 하숑!! 더 이상 수행 안할거임..") #에러를 인위적으로 발생시키고 프로그램을 종료시킴. 프로그램을 종료시키지 않으려면 309번째 라인의 tryCatch문 사용.
   if(x>5){
     x <- 5
-    warning("5보다 크면 안됨!! 하여 5로 처리했삼...!!") #콘솔창에 경고메시지를 출력한다.
+    warning("5보다 크면 안됨!! 하여 5로 처리했삼...!!") #콘솔창에 경고메시지를 출력한다. #프로그램은 계속 진행시킴.
   }
   return(rep("테스트",x))
 }
@@ -333,7 +333,7 @@ testAll("아무거나")
 
 v <- c(10, 5, 20, NA, 30) #NA는 객체는 있는데 그 안의 엘리먼트 값이 없는 거다. 반면 NULL은 객체가 비어있는 거다.
 sum(v)
-sum(v, na.rm=T) #NA가 있으면 NA를 없애고 연산을 한다.
+sum(v, na.rm=T) #NA가 있으면 NA를 없애고 연산을 한다.  na.rm=T  요긴하게 쓸 일 좀 있음.
 
 f.case1 <- function(x) {
   if(is.na(x)) #x는 하나의 값인데 객체를 줬을때는 에러가 난다. 
@@ -362,8 +362,10 @@ f.case2(c(10,20,30))
 f.case2(c(NA, 20))
 f.case2(c(10, NA, 20))
 
+
+#11/02 시작
 f.case3 <- function(x) {
-  if(all(is.na(x))) 
+  if(all(is.na(x))) #모두 다 NA인지 체크
     return("모두 NA임")
   else
     return("모두 NA인 것은 아님")
@@ -380,7 +382,7 @@ testSleep1 <- function(x) {
   for(data in 6:10) {       
     cat(data,"\n")
     if(x)
-      Sys.sleep(1)
+      Sys.sleep(1) #숫자만큼 초단위로 쉰다.
   }
   return()
 }
@@ -389,13 +391,13 @@ testSleep1(TRUE)
 
 # 가변형 인자 테스트
 funcArgs1 <- function(...) {
-  p <- c(...)
+  p <- c(...) #가변 아규먼트로 넘어온 데이터들을 벡터를 생성해서 p객체에 저장한다. 벡터는 타입이 다른 데이터가 있으면 자동형변환을 해서 데이터 타입을 하나로 맞춘다. 그게 싫으면 list(...)로 리스트를 생성해야 함.
   data <- c(10,15,3,5,17,25)
   for(opt in p) {
-    switch(EXPR=opt,
-           SUM=, Sum=, sum= print(sum(data)),
-           MEAN=, Mean=, mean= print(mean(data)),
-           DIFF=, Diff=, diff= print(max(data) - min(data)),
+    switch(EXPR=opt, #opt가 char형이라고 간주하고 아래와 같이 비교값을 줬다.
+           SUM=, Sum=, sum= print(sum(data)), #SUM이거나 Sum이거나 sum이면 print(sum(data))를 실행하시오. 앞에 두 개는 처리식이 생략되어 뒤에 처리식이 적용된다.
+           MEAN=, Mean=, mean= print(mean(data)), #문자열을 비교하는데 ""를 붙이지 않았다.
+           DIFF=, Diff=, diff= print(max(data) - min(data)), #Diff같은 함수는 없다. 제일 큰 값과 제일 작은 값의 차를 직접 구해서 출력한다.
            MAX=, Max=, max= print(max(data)),
            MIN=, Min=, min= print(min(data)),
            SORT=, Sort=, sort= print(sort(data))
@@ -403,8 +405,8 @@ funcArgs1 <- function(...) {
   }
 }
 
-funcArgs1()
-funcArgs1("SUM", "mean", "Min")
+funcArgs1() #이 때는 비어있는 벡터가 만들어지고 for문이 수행되지 않음.
+funcArgs1("SUM", "mean", "Min") 
 funcArgs1("SORT", "Sort", "sort")
 
 
@@ -412,15 +414,15 @@ funcArgs1("SORT", "Sort", "sort")
 
 
 # 가변형 인자 테스트
-funcArgs2 <- function(...) {
-  p <- c(...)
+funcArgs2 <- function(...) { #(...)은 가변 아규먼트
+  p <- c(...) #가변 아규먼트를 벡터로 만들어서 p객체에 저장함. c()는 벡터를 생성하는 함수
   data <- c(10,15,3,5,17,25)
-  if(is.null(p))
-    print(data)
+  if(is.null(p)) #받은 매개변수가 없을때 p는 null이 된다.
+    print(data) #그러면 벡터 data를 출력한다.
   else 
     for(opt in p) {
-      switch(EXPR=opt,
-             SUM=, Sum=, sum= print(sum(data)),
+      switch(EXPR=opt, #opt는 문자열
+             SUM=, Sum=, sum= print(sum(data)), #문자열을 비교할때 따옴표를 붙여도 되고 안 붙여도 됨.
              MEAN=, Mean=, mean= print(mean(data)),
              DIFF=, Diff=, diff= print(max(data) - min(data)),
              MAX=, Max=, max= print(max(data)),
