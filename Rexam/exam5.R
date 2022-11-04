@@ -9,10 +9,10 @@ install.packages("httr")   #주석을 해제하고 실행을 하면 패키지를
 
 
 # [ 예제1 ]
-library(rvest) #이걸 해줘야 쓸 수 있다. 패키지는 설치됐다고 무조건 쓸 수 있는게 아니라 메모리에 로드해놓고 써야한다.
+library(rvest) #이걸 해줘야 쓸 수 있다. 패키지는 설치됐다고 무조건 쓸 수 있는게 아니라 메모리에 로드해놓고 써야한다. #얘를 로드하면 자동으로 xml2도 로딩이 된다.
 
 url <- "http://unico2013.dothome.co.kr/crawling/tagstyle.html"
-text <- read_html(url)
+text <- read_html(url)   #html 내용 전체를 읽어옴.
 text
 
 str(text)
@@ -21,7 +21,7 @@ text$doc
 nodes <- html_nodes(text, "div") # 태그 선택자
 nodes
 
-title <- html_text(nodes) #div태그들의 node 객체들을 ~~
+title <- html_text(nodes) #div태그들의 node 객체들을 ~~ (nodes는 바로 위에서 생성해준 객체임)
 title
 
 node1 <- html_nodes(text, "div:nth-of-type(1)") #첫번째 div태그를 찾아온다.
@@ -42,11 +42,11 @@ html_text(node3)
 # 웹문서 읽기
 url <- "https://www.data.go.kr/tcs/dss/selectDataSetList.do" #직접 들어가서 오픈 API (9,501건) 리스트를 흝어보자. 게시글이 하나의 컨텐트다.
 html <- read_html(url)
-html
+html #리턴하는게 리스트 객체다. 18번째 라인에서처럼 str()함수 실행해보면 뭘 리턴하는지 알 수 있음
 
 # 목록 아이템 추출
 title <- html_text(html_nodes(html, "#apiDataList .title")) #만약 함수 매개변수 맨 뒤에 trim=T를 주면 공백이나 탭문자를 다 없애줘서 출력한다. 다만 문자열 중간에 있는 \r\n은 지워지지 않는다. 그건 56번째 라인 참고.
-title
+title                         #위 함수의 두 번째 매개변수로 css=를 줘도 되는데 안 주는 이유는 포지션 아규먼트로 2번째 매개변수가 css기 때문이다.  
 
 # 목록 아이템 설명 추출
 desc <- html_text(html_nodes(html, "#apiDataList .ellipsis"))
@@ -118,7 +118,7 @@ View(onepagedf2)
 
 # [ 예제5 ]
 # 영화 제목, 평점, 리뷰글 읽기(2)
-vtitle<-NULL; vpoint<-NULL; vreview<-NULL; page=NULL
+vtitle<-NULL; vpoint<-NULL; vreview<-NULL; page=NULL #for문 안과 밖에서 둘 다 사용하기 위해 for문 밖에서 미리 생성해주고 for문에서 사용해야 하는 듯 함.
 url<- "http://movie.naver.com/movie/point/af/list.nhn?page=1"
 html <- read_html(url)
 html
@@ -181,7 +181,7 @@ for(i in 1: 100) {
   cat(i, "페이지\n")
   url <- paste0(site, i)
   html <- read_html(url)
-  for (index in 1:10) {
+  for (index in 1:10) { #리뷰글은 필수가 아니라 리뷰글이 어떤 영화에 관련된 것인지 알기 위해 for문을 돌렸다고 함.
     # 영화제목
     node <- html_node(html, paste0("#old_content > table > tbody > tr:nth-child(", index, ") > td.title > a.movie.color_b"))
     title <- html_text(node)
@@ -199,11 +199,11 @@ for(i in 1: 100) {
 }
 movie.allreview <- data.frame(vtitle, vpoint, vreview)
 View(movie.allreview)
-write.csv(movie.allreview, "output/movie_reviews_100page.csv")
+write.csv(movie.allreview, "output/movie_reviews_100page.csv") #csv파일은 엑셀에서 열면 엑셀은 utf-8을 지원하지 않아서 메모장에서 열어야 함. 만약 ,fileEncoding='CP949'를 붙여주면 엑셀로 열 수 있음. 다만 그러면 R에서 파일을 읽을 때도 CP949로 읽도록 해야함.
 
 
 # [ 예제8 ]
-# 한겨레 페이지(XML 패키지 사용)
+# 한겨레 페이지(XML 패키지 사용) #R대이터수집_정적.pdf 6pg
 library(XML)
 library(rvest)
 imsi <- read_html("http://www.hani.co.kr/")
@@ -214,33 +214,33 @@ content
 
 # [ 예제9 ]
 # W3C의 HTTP 프로토콜 스팩에서 Table of Contents 읽기
-title2 = html_nodes(read_html('http://www.w3.org/Protocols/rfc2616/rfc2616.html'), 'div.toc h2')
+title2 = html_nodes(read_html('http://www.w3.org/Protocols/rfc2616/rfc2616.html'), 'div.toc h2') #toc이라는 클래스 속성을 갖고있는 div태그의 자손 태그인 h2
 title2 = html_text(title2)
 title2
 
 # [ 예제10 ]
 # 뉴스, 게시판 등 글 목록에서 글의 URL만 뽑아내기 
-htxt = read_html("https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=001")
-link = html_nodes(htxt, 'div.list_body a'); 
+htxt = read_html("https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=001") #보통 httr in r 같이 검색하면 나오는데 pdf파일로 
+link = html_nodes(htxt, 'div.list_body a'); #이미지와 헤드라인이 같은 링크를 가리킨다.
 length(link)
-article.href = unique(html_attr(link, 'href'))
-article.href
+article.href = unique(html_attr(link, 'href')) #unique()는 중복된 것들은 하나로 처리해줌. 이런 게 왜 필요하냐면 링크될 실제 뉴스에 대한 페이지로 요청을 해서 내용을 끌어와야 할 수도 있다. 그럴때는 페이지에 대한 url을 벡터나 파일로 보관을 해서 끌어오는 요청을 ㅐㅎ야 한다. 그걸 크롤링이라 한다.(뭔소리야)
+article.href 
 
 # [ 예제11 ]
 # 이미지, 첨부파일 다운 받기 
 # pdf
 library(httr)
-res = GET('http://cran.r-project.org/web/packages/httr/httr.pdf')
-writeBin(content(res, 'raw'), 'c:/Temp/httr.pdf')
+res = GET('http://cran.r-project.org/web/packages/httr/httr.pdf') #GET은 R데이터수집_정적.pdf의 6pg 마지막에 나오는 httr이라는 패키지에서 제ㅐ공하는 함수다. POST라는 함수도 있다. 데이터수집할때 POST 방식을 쓸 일은 거의 없다. POST 방식으로 된 데이터를 수집할 때는 정말 그 것 밖에 방법이 없는가 생각해야 한다. 왜냐하면 POST방식으로 데이터를 나둔 것은 이유가 있을 것이기 때문이다. 
+writeBin(content(res, 'raw'), 'c:/Temp/httr.pdf') #받아온 것을 writeBin()을 이용해 2번째 매개변수에 저장한다.
 
-# [ 예제10 ]
+# [ 예제12 ]
 # jpg
-h = read_html('http://unico2013.dothome.co.kr/productlog.html')
-imgs = html_nodes(h, 'img')
-img.src = html_attr(imgs, 'src')
+h = read_html('http://unico2013.dothome.co.kr/productlog.html') 
+imgs = html_nodes(h, 'img') 
+img.src = html_attr(imgs, 'src') #img.rsc는 이미지 파일 이름만 들어가있음. #페이지 개수가 ~~~~~~
 for(i in 1:length(img.src)){
   res = GET(paste('http://unico2013.dothome.co.kr/',img.src[i], sep=""))
-  writeBin(content(res, 'raw'), paste('c:/Temp/', img.src[i], sep=""))
+  writeBin(content(res, 'raw'), paste('c:/Temp/', img.src[i], sep=""))  #실행하고나면 사용자의 컴퓨터에 이미지가 다운로드 되어있음.
 } 
 
 
