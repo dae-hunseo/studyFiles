@@ -20,7 +20,7 @@ doc2 <- xmlParse(doc, encoding="UTF-8") #htmlParse() 써도 안 되는건 아닌
 text<- xpathSApply(doc2, "//item/description", xmlValue) #조상이 누가 있던 간에 item이란 태그를 찾아라. /를 하나만 주면 최상위 태그라는 뜻이다. //를 두 번 쓰면 부모가 누가 있던 간에 이런 뜻이다. 그 id태그 밑에 자식 태그인 description 태그를 찾으라는 뜻이다. 찾아서 세번째 매개변수로 xmlValue라는 함수를 같이 주면 컨텐트를 추출해준다.
 text
 text1 <- gsub("</?b>", "", text) # </?b> --> <b> 또는 </b> #전달받은 10개의 디스크립션중에 </?b>는 정규표현식인데 text객체에서 gsub()함수로 </?b>나 <b>를 없앤 것을 text1에 저장하란 뜻이다.
-text1 <- gsub("&apos;|&quot;|&amp;", "", text1) 
+text1 <- gsub("&apos;|&quot;|&amp;", "", text1) #&apos는 ' #&quot는 " #&amp는 &  #html entity 검색
 text1
 
 text[100]
@@ -36,13 +36,17 @@ url <- paste0(searchUrl, "?query=", query, "&display=100") #paste0은 문자열�
 doc <- GET(url, add_headers("Content_Type" = "application/xml",
                             "X-Naver-client-Id" = Client_ID, "X-naver-Client-Secret" = Client_Secret))
 
+
+#11/07 시작
+
 # 네이버 뉴스 내용에 대한 리스트 만들기		
 doc2 <- xmlParse(doc)
 text<- xpathSApply(doc2, "//item/description", xmlValue); 
 text
-text2 <- gsub("</?b>", "", text) # </?b> --> <b> 또는 </b>
-text2 <- gsub("&apos;|&quot;|&amp;", "", text2)
-text2
+text2 <- gsub("</?b>", "", text) # </?b> --> <b> 또는 </b> #sub는 pattern이 바로 정규표현식을 의미하는 문자열인데 pattern에 알맞는 문자열을 찾아서 replacement에 알맞는 문자열로 대체하라는 뜻인데 sub는 한 번만 대체한다. 일반문자열인 string문자열에서 pattern에 알맞는 문자열을 찾아서 replacement로 바꿔라. 그런데 sub는 첫번째 매칭되는 애 하나만 바꾸고 gsub는 매칭되는 모든 애들을 바꾼다. RegExCheatsheet.pdf 참고(봐도 모르긴 할듯)
+text2 <- gsub("&apos;|&quot;|&amp;", "", text2) #&apos는 ' #&quot는 " #&amp는 &  #aneok.tistory.com/86에서 여기서 사용한 html entity를 볼 수 있음(&apos 제외). 특수문자를 뜻이 있는것이 아닌 출력용으로 쓸 때 사용하는 것임.
+text2 <- gsub("&[A-Za-z]{2,4};","",text2) # 대부분 &로 시작하고 ;로 끝나고 그 사이에는 영문자대문자 영문자소문자가 2개에서 4개 온다는 뜻이다. #정규표현식 #정규표현식은 RegExCheatsheet.pdf 참고(봐도 모르긴 할듯)
+text2 #gsub는 첫번째 매개변수인
 
 text[95:97]
 text2[95:97]
@@ -98,32 +102,32 @@ View(df)
 write.csv(df, "output/seoul_stedu.csv")
 
 
-# 정규표현식 사용
+# 정규표현식 사용 #정규표현식은 gsub()의 첫번째 매개변수로 들어간다. 11/02의 RegExCheatsheet.pdf에 있다.
 word <- "JAVA javascript Aa 가나다 AAaAaA123 %^&*"
-gsub(" ", "@", word)
-sub(" ", "@", word)
-gsub("A", "", word) 
-gsub("a", "", word) 
-gsub("[Aa]", "", word) 
-gsub("A|a", "", word) 
-gsub("Aa", "", word) 
-gsub("(Aa)", "", word) 
-gsub("(Aa){2}", "", word);gsub("Aa{2}", "", word) 
-# "JAVA javascript Aa 가나다 AAaAaA123 %^&*"
-gsub("[Aa]", "", word) 
-gsub("[가-힣]", "", word) 
-gsub("[^가-힣]", "", word) 
-gsub("[&^%*]", "", word) 
+gsub(" ", "@", word) #gsub()와 sub()의 첫번째 매개변수로는 정규표현식이나 일반문자열을 줄 수 있다.
+sub(" ", "@", word) #sub()는 처음 해당하는 값만 적용한다. gsub()는 global으로 모든 해당하는 값에 적용한다.
+gsub("A", "", word) #대문자 A를 없앤다.(대체할 2번째 매개변수 값이 없기 때문)
+gsub("a", "", word) #sub와 gsub는 3번째 매개변수의 내용 중에 첫번째 매개변수값을을 두번째 매개변수 값으로 바꾼다.
+gsub("[Aa]", "", word) #대문자A와 소문자a를 없앤다.
+gsub("A|a", "", word) #대문자A 또는 소문자a를 없앤다.
+gsub("Aa", "", word)  #대문자A소문자a가 붙어있는(Aa) 값을 없앤다.
+gsub("(Aa)", "", word) #소괄호를 붙여도 결과는 같다. 밑에 코드처럼 쓸 때 ()가 의미가 있다.
+gsub("(Aa){2}", "", word);gsub("Aa{2}", "", word) #Aa를 하나의 그룹으로 만들고 {2}를 지정해줬는데 Aa가 2번 반복될때만 없애라는 뜻이다. #Aa{2}는 바로 앞에있는 a에만 적용된다. a가 2번 반복된 즉 'aa'를 찾아서 없애는데 text변수에는 그런 값이 없다.
+# "JAVA javascript Aa 가나다 AAaAaA123 %^&*" #word객체 값
+gsub("[Aa]", "", word) #대문자A와 소문자a를 없앤다.
+gsub("[가-힣]", "", word) #'-'를 주목해야 한다. 모든 한글을 없앤다.(대체할 2번째 매개변수 값이 없기 때문)
+gsub("[^가-힣]", "", word) #'^'은 NOT의 의미다. 한글이 아닌 애를 없애라는 명령이다. #공백이나 특수문자도 다 사라져서 일이 커질 수도 있음에 주의해야 한다.
+gsub("[&^%*]", "", word) #'^'가 제일 앞에 있어야 NOT의 이미가 된다. 즉 여기서는 특수문자 &^%*를 없애라는 명령이다.
 gsub("[[:punct:]]", "", word) 
-gsub("[[:alnum:]]", "", word) 
-gsub("[1234567890]", "", word) 
-gsub("[0-9]", "", word) 
-gsub("\\d", "", word) 
-gsub("\\D", "", word)
-gsub("[[:digit:]]", "", word) 
-gsub("[^[:alnum:]]", "", word) 
-gsub("[[:space:]]", "", word) 
-gsub("[[:punct:][:digit:]]", "", word) 
-gsub("[[:punct:][:digit:][:space:]]", "", word) 
+gsub("[[:alnum:]]", "", word) #한글영문숫자를 없애라
+gsub("[1234567890]", "", word) #숫자를 없앤다.(대체할 2번째 매개변수 값이 없기 때문)
+gsub("[0-9]", "", word) #0부터 9까지 즉 숫자를 없앤다.
+gsub("\\d", "", word)  #숫자를 없앤다.
+gsub("\\D", "", word) #숫자를 제외하고 없앤다.
+gsub("[[:digit:]]", "", word) #숫자를 없앤다.
+gsub("[^[:alnum:]]", "", word) #'^'가 붙었기 때문에 한글영문숫자가 아닌 애들을 없앤다(공백 포함해서 없어진다.)
+gsub("[[:space:]]", "", word) #공백만 없앤다.
+gsub("[[:punct:][:digit:]]", "", word) #특수문자와 숫자를 없앤다(영문,공백,한글만 남는다)
+gsub("[[:punct:][:digit:][:space:]]", "", word) #특수문자, 숫자, 공백을 없앤다.
 
 
