@@ -80,7 +80,7 @@ newv2
 install.packages("RSelenium")
 library(RSelenium)
 remDr <- remoteDriver(remoteServerAddr = "localhost" , 
-                      port = 4445, browserName = "chrome") #셀레니움 불러옴 #접속이 성공적으로 일어나면 remoteDriver 객체가 리턴된다.
+                      port = 4445, browserName = "chrome") #셀레니움 불러옴 #접속이 성공적으로 일어나면 remoteDriver 객체가 리턴된다. #포트번호를 4445로 해주는 이유는 R데이터수집_동적.pdf 8pg에서처럼 이걸 실행시키기 위해서 cmd창에다가 코드를 입력해야하는데 그 때 포트 번호를 4445로 해줬기 때문.
 remDr$open() #셀레니움 서버에 의해 구동되는 크롬 브라우저 창이 열린다
 remDr$navigate("http://www.google.com/") #새로 열린 창에서 구글에 접속하도록 렌더링 시킨다. 이런 모든 처리는 셀레니움 서버를 통해서 브라우저가 하도록 한다.
 class(remDr) #콘솔창 확인
@@ -187,7 +187,7 @@ for (i in 4:12) {
   nextCss <- paste0("#cbox_module>div>div.u_cbox_paginate>div> a:nth-child(",i,") > span") #paste0은 문자열을 이어붙인다. #2~10 페이지를 가도록 링크를 클릭하는 곳의 선택자경로를 copy selector해서 공통점과 차이점들을 알아내서 이렇게 반복문을 적용한다.
   nextPage<-remDr$findElement(using='css selector', nextCss)
   nextPage$clickElement()
-  Sys.sleep(2)
+  Sys.sleep(2) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
 }
 
 
@@ -227,14 +227,14 @@ doms2<-remDr$findElements(using ="css selector","ul.u_cbox_list span.u_cbox_cont
 repl <-sapply(doms2,function(x){x$getElementText()})
 repl_v <- c(repl_v, unlist(repl))
 
-repeat { #자동으로 2~10페이지까지 모든 댓글을 읽어오도록 실행시킴. #183~188번째 라인은 자동으로 넘어오기만 하고 댓글을 읽어오지는 않았음.
-  for (i in 4:12) {               #양이 많아서 읽어오는데 30분 넘게 걸린다.
+repeat { #무한 반복문(break를 줘야 종료)
+  for (i in 4:12) {  #자동으로 2~10페이지까지 모든 댓글을 읽어오도록 실행시킴. #183~188번째 라인은 자동으로 넘어오기만 하고 댓글을 읽어오지는 않았음.             
     nextCss <- paste("#cbox_module>div>div.u_cbox_paginate>div> a:nth-child(",i,") > span", sep="") #2~10pg 버튼(?)의 노드객체 path를 가져온다. (브라우저에서 f12눌러서 해당되는 코드의 Copy Selector)
     nextListLink <- NULL
     try(nextListLink<-remDr$findElement(using='css selector',nextCss)) #try에 넣은 이유는 findElements는 찾는게 없으면 비어있는 리스트를 리턴하지만, findElement는 찾는 게 없으면 에러를 발생시키기 때문.
     if(length(nextListLink) == 0)   break;
     nextListLink$clickElement()
-    Sys.sleep(1)
+    Sys.sleep(1) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
     #전체 댓글의 해당 페이지 내용 읽어오기
     doms3<-remDr$findElements(using ="css selector","ul.u_cbox_list span.u_cbox_contents")
     repl <-sapply(doms3,function(x){x$getElementText()})
@@ -243,12 +243,12 @@ repeat { #자동으로 2~10페이지까지 모든 댓글을 읽어오도록 실�
   nextPage <- NULL   #10 페이지까지 읽었다면
   try(nextPage<-remDr$findElement(using='css selector',
                                   "#cbox_module > div > div.u_cbox_paginate > div > a:nth-child(13) > span.u_cbox_cnt_page")) #다음페이지로 가는 버튼객체 정보를 가져옴
-  if(length(nextPage) == 0)  break; #만약 다음페이지로 가는 버튼객체가 활성화되어있지 않으면 repeat 반복문 정지지
+  if(length(nextPage) == 0)  break; #만약 다음페이지로 가는 버튼객체가 활성화되어있지 않으면 repeat 반복문 정지
   nextPage$clickElement() #다음 페이지로 가는 버튼 객체가 활성화되어있다면 클릭이벤트를 발생시킴
-  Sys.sleep(1) #1초간 정지
-  doms2<-remDr$findElements(using ="css selector","ul.u_cbox_list span.u_cbox_contents") #페이지 내용 읽어옴
-  repl <-sapply(doms2,function(x){x$getElementText()})
-  repl_v <- c(repl_v, unlist(repl))        
+  Sys.sleep(1) #1초간 정지 #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
+  doms2<-remDr$findElements(using ="css selector","ul.u_cbox_list span.u_cbox_contents") #댓글 내용을 담은 객체들을 수집한다.
+  repl <-sapply(doms2,function(x){x$getElementText()}) #doms2 객체의 컨텐트를 읽어와서 repl에 저장한다.
+  repl_v <- c(repl_v, unlist(repl))  #repl이 리스트로 저장되어 벡터로 만들고 다른 객체 안에 저장한다.      
 }
 print(repl_v)
 write(repl_v, "output/webtoon.txt")
@@ -259,24 +259,24 @@ remDr <- remoteDriver(remoteServerAddr = "localhost" , port = 4445, browserName 
 remDr$open() #셀레니움에 의해 구동되는 브라우저가 하나 열린다.
 url<-'https://www.agoda.com/ko-kr/shilla-stay-yeoksam/hotel/seoul-kr.html?asq=z91SVm7Yvc0eRE%2FTBXmZWCYGcVeTALbG%2FvMXOYFqqcm2JknkW25Du%2BVdjH%2FesXg8ORIaVs1PaEgwePlsVWfwf3sX%2BVNABRcMMOWSvzQ9BxqOPOsvzl8390%2BEhEylPvEiBp0eoREr2xLYHgqmk0Io4J1HYEzEOqyvdox%2BwS6yxHeonB9lh7mJsBIjSBPoMzBLFW01k%2BU8s2bGO6PcSdsu3T30HwabyNzwNYKiv%2BRDxfs%3D&hotel=699258&tick=637215342272&languageId=9&userId=bcb7ecc6-7719-465f-bf29-951e39733c66&sessionId=uouhnqjisace4freagmzbxxc&pageTypeId=7&origin=KR&locale=ko-KR&cid=-1&aid=130243&currencyCode=KRW&htmlLanguage=ko-kr&cultureInfoName=ko-KR&ckuid=bcb7ecc6-7719-465f-bf29-951e39733c66&prid=0&checkIn=2020-05-30&checkOut=2020-05-31&rooms=1&adults=1&childs=0&priceCur=KRW&los=1&textToSearch=%EC%8B%A0%EB%9D%BC%EC%8A%A4%ED%85%8C%EC%9D%B4%20%EC%97%AD%EC%82%BC%20(Shilla%20Stay%20Yeoksam)&productType=-1&travellerType=0&familyMode=off'
 remDr$navigate(url)
-Sys.sleep(3)
+Sys.sleep(3) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
 pageLink <- NULL #이전에 사용한 remDr의 정보를 삭제하기 위함.
 reple <- NULL #이전에 사용한 remDr의 정보를 삭제하기 위함.
 curr_PageOldNum <- 0
 repeat{ #마지막 페이지에 도달할때까지 반복함. while(true)처럼 보면 됨
   doms <- remDr$findElements(using = "css selector", ".Review-comment-bodyText")
-  Sys.sleep(1)
+  Sys.sleep(1) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
   reple_v <- sapply(doms, function (x) {x$getElementText()})
   #print(reple_v)
   reple <- append(reple, unlist(reple_v))
   cat(length(reple), "\n")
   pageLink <- remDr$findElements(using='css selector',"#reviewSection > div:nth-child(6) > div > span:nth-child(3) > i ")
   remDr$executeScript("arguments[0].click();",pageLink)
-  Sys.sleep(2)
+  Sys.sleep(2) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
   curr_PageElem <- remDr$findElement(using='css selector','#reviewSection > div:nth-child(6) > div > span.Review-paginator-numbers > span.Review-paginator-number.Review-paginator-number--current')
   curr_PageNewNum <- as.numeric(curr_PageElem$getElementText())
   cat(paste(curr_PageOldNum, ':', curr_PageNewNum,'\n'))
-  if(curr_PageNewNum == curr_PageOldNum)  { #마지막 페이지에 도달했다면 #다음 페이지 버튼이 비활성화되면 마지막 페이지로 보던가 이 코드처럼 현재 읽은 페이지와 새로 읽게될 페이지가 같으면 종료시킴. #아니면 마지막 페이지를 계속해서 반복해서 읽음.
+  if(curr_PageNewNum == curr_PageOldNum)  { #마지막 페이지에 도달했다면 #현재 읽은 페이지와 새로 읽게될 페이지가 같으면 종료시킴. #이렇게 안 하면 마지막 페이지를 계속해서 반복해서 읽음.
     cat("종료\n")
     break; 
   }
@@ -298,7 +298,7 @@ length(booksitenodes)
 for (booksitenode in booksitenodes) { #책 제목을 뽑아오도록 코드를 바꿔보라고 함.
   print(booksitenode$getElementText())
   booksitenode$clickElement()
-  Sys.sleep(2)
+  Sys.sleep(2) #렌더링이 빨리 되지 않기 때문에 렌더링할 시간을 줘야 함.
   books = remDr$findElements(using='css selector', '#__next > div > div.home_book_home__5LVmZ > div > div:nth-child(16) > div > div.bestSeller_book_area__p2Fwa > div > ul > li> a > div.bestSeller_text_area__oQhay > strong') # Copy Selector를 하면 특정 라인의 코드의 path를 받을 수 있는데 거기서 li:nth-child(1)로 되어있는 것을 li로 바꿔줬다.
   for(bookname in books) 
     print(unlist(bookname$getElementText()))
@@ -308,7 +308,7 @@ for (booksitenode in booksitenodes) { #책 제목을 뽑아오도록 코드를 �
 
 
 
-
+#11/08 시작
 # [ GS25 1+1 상품 첫페이지 스크래핑 ]
 
 site <- 'http://gs25.gsretail.com/gscvs/ko/products/event-goods'
@@ -316,10 +316,10 @@ remDr$navigate(site)
 
 
 eventgoodsnodes <- remDr$findElements(using='css selector', '#contents > div.cnt > div.cnt_section.mt50 > div > div > div:nth-child(3) > ul > li > div > p.tit')
-eventgoodsname <- sapply(eventgoodsnodes, function(x) {x$getElementText()})
+eventgoodsname <- sapply(eventgoodsnodes, function(x) {x$getElementText()}) #상품정보(이름) 가져옴.
 
 eventgoodsnodes <- remDr$findElements(using='css selector', '#contents > div.cnt > div.cnt_section.mt50 > div > div > div:nth-child(3) > ul > li > div > p.price > span')
-eventgoodsprice <- sapply(eventgoodsnodes, function(x) {x$getElementText()})
+eventgoodsprice <- sapply(eventgoodsnodes, function(x) {x$getElementText()}) #가격을 가져옴.
 
 data.frame(egn = unlist(eventgoodsname), egp = unlist(eventgoodsprice))
 
@@ -334,19 +334,19 @@ remDr$open()
 remDr$navigate("http://www.yes24.com/24/goods/40936880")
 
 repl_v = NULL
-endFlag <- FALSE
+endFlag <- FALSE #이게 TRUE가 되면 종료.
 page <- 3
 
 repeat {
-  for(index in 3:7) {
+  for(index in 3:7) { #1pg에서 글을 3~7 즉 5개씩 글을 하나하나 for문 돌려서 읽음
     fullContentLinkcss <- paste("#infoset_reviewContentList > div:nth-child(",index,") > div.reviewInfoBot.crop > a", sep='')
     fullContentLink<-remDr$findElements(using='css selector',  fullContentLinkcss)
-    if (length(fullContentLink) == 0) {
+    if (length(fullContentLink) == 0) { #그 다음 읽을 글이 없으면 맨 마지막 글까지 읽은 것.
       cat("종료\n")
       endFlag <- TRUE
       break
     }
-    remDr$executeScript("arguments[0].click();",fullContentLink);
+    remDr$executeScript("arguments[0].click();",fullContentLink); #후기 더보기 버튼을 누르는 클릭 이벤트가 실행된다. 더보기 버튼을 누르지 않으면 앞부분만 내용을 읽어온다.
     Sys.sleep(1)
     fullContentcss <- paste("#infoset_reviewContentList > div:nth-child(",index,") > div.reviewInfoBot.origin > div.review_cont > p", sep='')
     fullContent<-remDr$findElements(using='css selector', fullContentcss)
@@ -355,7 +355,7 @@ repeat {
     cat("---------------------\n")
     repl_v <- c(repl_v, unlist(repl))
   }
-  if(endFlag)
+  if(endFlag) #TRUE이면 종료
     break;  
   
   if(page == 10){
@@ -366,8 +366,8 @@ repeat {
     page <- page+1;
     nextPagecss <- paste("#infoset_reviewContentList > div.review_sort.sortBot > div.review_sortLft > div > a:nth-child(",page,")",sep="")
   }
-  nextPageLink<-remDr$findElements(using='css selector',nextPagecss) 
-  remDr$executeScript("arguments[0].click();",nextPageLink);
+  nextPageLink<-remDr$findElements(using='css selector',nextPagecss) #다음 페이지로 넘어가는 객체의 정보를 가져온다.
+  remDr$executeScript("arguments[0].click();",nextPageLink); #다음 페이지로 넘어가기 위한 클릭이벤트 실행
   Sys.sleep(2)
   print(page)
 }
@@ -376,7 +376,7 @@ write(repl_v, "output/yes24.txt")
 
 
 
-# [스타벅스 서울 전체 매장 정보 크롤링&스크래핑]
+# [스타벅스 서울 전체 매장 정보 크롤링&스크래핑] - 강사 경험상 가장 어려운 사이트
 
 library(RSelenium)
 
@@ -391,20 +391,20 @@ Sys.sleep(3)
 #서울 클릭
 btn1css <- "#container > div > form > fieldset > div > section > article.find_store_cont > article > article:nth-child(4) > div.loca_step1 > div.loca_step1_cont > ul > li:nth-child(1) > a"
 btn1Page <- remDr$findElements(using='css selector',btn1css)
-sapply(btn1Page,function(x){x$clickElement()})
+sapply(btn1Page,function(x){x$clickElement()}) #클릭이벤트 실행
 Sys.sleep(3)
 
-#전체 클릭
+#(서울의 지역구 선택에서)전체 클릭
 btn2css <- "#mCSB_2_container > ul > li:nth-child(1) > a"
 btn2Page <- remDr$findElements(using='css selector',btn2css)
-sapply(btn2Page,function(x){x$clickElement()})
+sapply(btn2Page,function(x){x$clickElement()}) #클릭이벤트 실행
 Sys.sleep(3)
 
-index <- 0
+index <- 0 #첫번째 내장 정보를 읽을때는 1, 두 번째느 2, 세 번째는 3 그리고 433번째 라인에서 인덱스가 3의 배수가 될 때 마다 스크롤이벤트가 발생하도록 함.
 starbucks <- NULL
 total <- sapply(remDr$findElements(using='css selector',"#container > div > form > fieldset > div > section > article.find_store_cont > article > article:nth-child(4) > div.loca_step3 > div.result_num_wrap > span"),function(x){x$getElementText()})
 
-repeat{
+repeat{ #데이터를 읽어옴
   index <- index + 1
   print(index)
   
@@ -416,23 +416,23 @@ repeat{
   
   #스타벅스 정보 추출
   #strsplit(storeContent, split="\n")
-  storeList <- strsplit(unlist(storeContent), split="\n")
+  storeList <- strsplit(unlist(storeContent), split="\n") #데이터를 쪼개서 리스트로 리턴함. 엔터키로 정보를 구분하도록 지정.
   shopname <- storeList[[1]][1]
   addr <- storeList[[1]][2]
   addr <- gsub(",", "", addr)
   telephone <- storeList[[1]][3]
   
   #스타벅스 위도 경도 추출
-  lat <- sapply(storePage,function(x){x$getElementAttribute("data-lat")})
-  lng <- sapply(storePage,function(x){x$getElementAttribute("data-long")})
+  lat <- sapply(storePage,function(x){x$getElementAttribute("data-lat")}) #위도와 경도는 찾아온 태그의 속성으로 저장되어있다.
+  lng <- sapply(storePage,function(x){x$getElementAttribute("data-long")}) #컨텐트를 찾아오게|ㅆ다면 getElementText()인데 여기서는 속성의 값을 꺼내기 위해 getElementAttribute()를 사용함.
   
   #병합
-  starbucks <- rbind(starbucks ,cbind(shopname, addr, telephone, lat, lng))
+  starbucks <- rbind(starbucks ,cbind(shopname, addr, telephone, lat, lng)) #cbind(매장이름, 주소, 전화번호, 위도, 경도)
   
-  #스크롤 다운
-  if(index %% 3 == 0 && index != total)
-    remDr$executeScript("var dom=document.querySelectorAll('#mCSB_3_container > ul > li')[arguments[0]]; dom.scrollIntoView();", list(index))
-}
+  #스크롤 다운 #이 사이트는 얘가 중요하다. 이 if문을 주석으로 막고 관련 코드 전체를 실행시키고 starbucks를 따로 실행시켜보자. #홈페이지에서 지도 왼쪽에서 마크 목록을 스크롤을 내려서 정보를 얻어와야되는데 스크롤을 못 내리게 하니까 맨 위에 3개까지밖에 정보를 못 가져온다.
+  if(index %% 3 == 0 && index != total) #스타벅스 매장 객체 인덱스가 3의 배수가 될 때 마다 스크롤이벤트가 발생하도록 함.(0으로 초기화 시키는 게 아님)
+    remDr$executeScript("var dom=document.querySelectorAll('#mCSB_3_container > ul > li')[arguments[0]]; dom.scrollIntoView();", list(index)) #두 번째 아규먼트는 첫번째 아규먼트에 지정된 자바스크립트에게 전달하는 데이터다. 이 때 자바스크립트에게 전달할때는 리스트만 전달해야 한다고 함. list(index)는 arguments[0]에 전달된다고 한다. 3, 6, 9같은 3의 배수 값이 들어간다. dom이라는 지역변수를 하나 만들어서 자ㅏ스크립트 시간에 공부했던 document.querySelectorAll()함수. ##mCSB_3_container > ul > li는 자바스크립트는 인덱스가 0부터 시작하므로 3이 전달되면 4번째 li태그에 대한 DOM객체를 데려온다. 그리고 그 dom개체에 대해 scrollIntroView(). 전체 도큐먼트 영역에서의 스크롤이 아니라 지도 내 매장찾기 메뉴에서의 스크롤메뉴다 이 때 사용하는 메소드가 scrollIntroView()다. 처음에는 4번째 li태그에서 scrollIntroView를 처리하는 거고 그 다음에는 7번째. 이걸 계속 한다. 인덱스가 3의 배수가 될 때 마다 scrollIntroView()를 처리해서 li태그들을 활성화를 시킨 것이다. 해당 태그 영역 내에서 스크롤이 되어야 활성화가 된다는 게 스타벅스 외에는 안 보였는데 스타벅스를 찾고나서 보니 다른 사이트도 그렇게 동작하는 게 보이더라. 네이버 지도에서 검색 결과도 스크롤을 내려야 활성화가 된다. 
+} #스크롤 이벤트를 일으키고 싶다면 자바스크립트 언어로 해당 돔객체를 찾아온 다음에 dom객체.scrollIntroView();를 쓰면 된다. 홈페이지 전체를 스크롤 이벤트를 발생시키고 싶다면 그냥 scroll()만 하면 된다고 했었나 검색 필요함.
 write.csv(starbucks, "output/starbucks.csv")
 
 

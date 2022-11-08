@@ -160,7 +160,7 @@ for(i in 1: 100) {
   review <- imsi[nchar(imsi) > 0] 
   if(length(review) == 10) {
     page <- data.frame(title, point, review)
-    movie.review <- rbind(movie.review, page)
+    movie.review <- rbind(movie.review, page) #rbind는 rbind(데이터프레임1, 데이터프레임2) 이다.
   } else {
     cat(paste(i," 페이지에는 리뷰글이 생략된 데이터가 있어서 수집하지 않습니다.ㅜㅜ\n"))
   }
