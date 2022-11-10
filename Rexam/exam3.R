@@ -112,7 +112,7 @@ words_utf8_new <- scan("data/sample_utf8.txt", what="") #encoding이 기본값�
 lines_ansi <- readLines("data/sample_ansi.txt") #readLines는 내용을 텍스트 벡터로 읽는다. 그런데 행 단위로 읽는다. #data/sample_ansi.txt는 ansi로 작성된 코드다.
 lines_utf8 <- readLines("data/sample_utf8.txt",encoding="UTF-8") #endcoding대신 fileEncoding으로 줘도 똑같다. 
 
-df2 <- read.table("data/product_click.log", stringsAsFactors = T) #첫번째 열을 v1, 두 번째 열을 v2로 자동으로 이름 붙인다. #data\product_click.log처럼 공백으로 데이터가 구분되어있으면 read.table을 사용한다고 적어놨는데 뭔 소린지 찾아보자.
+df2 <- read.table("data/product_click.log", stringsAsFactors = T) #첫번째 열을 v1, 두 번째 열을 v2로 자동으로 이름 붙인다. #data\product_click.log처럼 공백으로 데이터가 구분되어있으면 read.table을 사용한다고 하는데 sep="구분문자"를 통해 다른 것으로 데이터를 구분할 수도 있다.
 str(df2)  #R구문보충.pdf 6pg에 따르면 read.table과 read.csv가 대비되는듯. csv파일은은 공백이 아닌 쉼표로 데이터를 구분했다.
 head(df2)
 summary(df2$V2)

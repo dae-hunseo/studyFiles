@@ -39,5 +39,5 @@ t[4] <- gsub("[a-zA-Z]","",t[4])
 t[5] <- gsub("[[:punct:][:digit:]]","",t[5])
 t[6] <- gsub(" ", "", t[6])
 t
-write(t, "data/memo_new.txt")
+write(t, "data/memo_new.txt") #write는 벡터를 쓴다. write를 블록해서 f1누르면 매개변수 타입이 나오는데 atomic vector라고 나온다.
 

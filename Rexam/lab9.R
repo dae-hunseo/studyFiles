@@ -93,4 +93,4 @@ print(replReason_v) #추천 이유 전체 출력
 print(replComments_v) #후기 전체 출력
 df <- data.frame(replScore_v, replReason_v, replComments_v) #데이터 프레임 생성
 View(df) #데이터프레임을 표로 정리해서 보여줌.
-write.csv(df, "output/movie.csv") #여러 벡터들을 데이터프레임으로 만들어서 파일에다가 쓴다.(txt 파일인 경우 write()사용)
+write.csv(df, "output/movie.csv") #94번째 줄에서 여러 벡터들을 데이터프레임으로 만들어서 데이터프레임 df를 파일에다가 쓴다.(txt 파일인 경우 write()사용)
