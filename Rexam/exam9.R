@@ -433,25 +433,27 @@ lines(month,                               # x 데이터
 #11/10 종료
 
 
-#9-2장 339pg
-dist <- cars[,2]                      # 자동차 제동거리 (단위: 피트)
+#11/11 시작
+#9-2장 339pg #cars[2]로 하면 데이터프레임 구조로 꺼냄
+dist <- cars[,2]                      # 자동차 제동거리 (단위: 피트) #벡터로 꺼냄
 boxplot(dist, main='자동차 제동거리')
 
 boxplot.stats(dist)
 
-boxplot(Petal.Length~Species,            # 자료와 그룹 정보
+boxplot(Petal.Length~Species,            # 자료와 그룹 정보 # ~Species를 주지 않으면 (데이터개수)150개를 petal.Length 하나로 그리게 될 거다. ~Species라는 column을 물결표시와 함께 지정했다. 그럼 이렇게 해석한다. sepecies별로 Petal.length를 가지고 boxplot을 그려라. 지금 species가 3개니까 각각 boxplot을 그린다고 보면 되겠다. y축~x축 이렇게 보면 된다.
         data=iris,                       # 자료가 저장된 자료구조
         main='품종별 꽃잎의 길이',       # 그래프의 제목    
-        col=c('green','yellow','blue'))  # 상자들의 색
+        col=c('green','yellow','blue'))  # 상자들의 색 
+#데이터값들을 일정한 기준으로 그룹핑해서 나눠서 박스플롯이 각각 그려지게끔 할 수 있다. 이 때는 data라는 매개변수를 통해서 어떤 data를 가지고 할 것인지를 지정하기 때문에 앞에 포물러식을 가지고 할 때는 컬럼명만 가지고 지정할 수 있다(뭔소리야) 342pg에 하나 더 알기라는~~~~~~~~~ 
 
-wt <-mtcars$wt                   # 중량 자료
+wt <-mtcars$wt                   # 중량 자료 #mtcars 드래그해서 f1 누르면 R이 내장하고 있는 데이터셋이란 것을 알 수 있음.
 mpg <- mtcars$mpg                # 연비 자료
 plot(wt, mpg,                    # 2개 변수(x축, y축)     
      main='중량-연비 그래프',    # 제목
      xlab='중량',                # x축 레이블
      ylab='연비(MPG)',           # y축 레이블
      col='red',                  # point의 color
-     pch=19)                     # point의 종류 
+     pch=19)                     # point의 종류 #pch로 문자를 지정하면 문자가 출력된다.
 
 vars <- c('mpg','disp','drat','wt')    # 대상 변수 
 target <- mtcars[,vars]                # 대상 자료 생성  
@@ -460,8 +462,8 @@ pairs(target,                          # 대상 자료
       main='Multi plots') 
 
 iris.2 <- iris[,3:4]                # 데이터 준비
-levels(iris$Species)                # 그룹 확인
-group <- as.numeric(iris$Species)   # 점의 모양과 색
+levels(iris$Species)                # 그룹 확인 #iris$Species는 범주형데이터인 팩터 타입이므로 levels()를 사용하면 범주를 보여준다.
+group <- as.numeric(iris$Species)   # 점의 모양과 색  #as.numeric을 써서 수치형 데이터로 변환했다. 팩터형이라 가능한건가?
 group                               # group 내용 출력
 color <- c('red','green','blue')    # 점의 컬러
 plot(iris.2, 
