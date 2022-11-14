@@ -5,7 +5,7 @@ library(dplyr) # detach("package:dplyr") 는 패키지에 대해서만 쓰는게
 
 install.packages("ggplot2") #mpg 데이터셋을 사용하기 위한 패키지 설치(11/11 mpg 데이터셋정보.png 참고)
 str(mpg) #수업진행하면서 만든 mpg
-str(ggplot2::mpg) #ggplot2의 mpg를 쓸 경우 패키지를 로드 안하고 쓸 거라면 이렇게 쓰면 된다. #tibble 타입인데 업그레이드된 데이터객체라고 생각하면 된다.
+str(ggplot2::mpg) #ggplot2의 mpg를 쓸 경우 패키지를 로드 안하고(library(ggplot2)를 안 하고) 쓸 거라면 이렇게 쓰면 된다. #tibble 타입인데 업그레이드된 데이터객체라고 생각하면 된다.
 head(ggplot2::mpg) #위에 6개만 데이터를 보여줌. 어떤 컬럼명과 데이터 사이에 어떤 타입인지도 보여준다.
 mpg <- as.data.frame(ggplot2::mpg) #tibble 객체인 mpg를 가지고 데이터프레임으로 변환해서  이 환경에서만 사용 가능한 mpg라는 새로운 객체를 만들었다.
 head(mpg)
