@@ -131,7 +131,7 @@ ggplot(mtcars, aes(x=cyl)) + geom_bar(aes(fill=factor(gear)), alpha=1.0) #alpha�
 
 # 다양한 내장 테마  #labs()로 표 제목과 x축이름, y축 이름을 따로 설정할 수 있다.
 ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_gray() #앞에는 똑같이 출력하고(코드내용은 다 같게 하고) 마지막에 값만 다르게 준다.
-ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_bw()
+ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_bw() #black&white #배경색을 흰색, 줄을 어둡게?
 ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_linedraw() #배경에 출력되는 그리드가 진하게 출력된다.
 ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_light() #배경색이 밝아진다.
 ggplot(mtcars, aes(x=gear))+geom_bar() + labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수") + theme_dark() #배경색이 어두워진다.
@@ -200,8 +200,8 @@ ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(linewidth=2, aes(group=compa
 ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(linewidth=2, aes(group=company,colour=company), linetype = "dotdash") #숫자 대신 실제 값으로 줘도 된다.
 # 점의 종류와 색상
 ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(size=2, aes(group=company, colour=company)) + geom_point(size=2, shape = 5) #3.4.0부터 size대신 linewidth 쓰라고 에러떴는데 여기서는 왜인지 안 바꿔도 됨
-ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(size=2, aes(group=company, colour=company)) + geom_point(size=2, shape = '가')
-ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(size=2, aes(group=company, colour=company)) + geom_point(size=2, shape = '가', colour = "Red")
+ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(size=2, aes(group=company, colour=company)) + geom_point(size=2, shape = '가') #shape에 숫자값을 주면 https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/ggplot2/figures/030-ggplot-point-shapes-r-pch-list-showing-different-point-shapes-in-rstudio-1.png 에 따르고 
+ggplot(coSalesDF, aes(x=year, y=sales)) + geom_line(size=2, aes(group=company, colour=company)) + geom_point(size=2, shape = '가', colour = "Red")#shape에 문자를 주면 문자가 직접 그래프에 출력된다.
 
 library(MASS)
 str(Cars93) #(library()로) 로드하고 나니까 이게 보인다.
